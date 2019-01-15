@@ -24,6 +24,14 @@ import org.apache.sling.api.adapter.Adaptable;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
+/**
+ * The interface that is usually passed as the method parameters of the type
+ * system's services acting as the context the services are working against.
+ *
+ * @param <T> the type of adaptable that the context represents
+ *
+ * @since 1.0
+ */
 @ProviderType
 public interface Context<T extends Adaptable> {
 

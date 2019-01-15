@@ -22,13 +22,35 @@ import java.util.Collection;
 import java.util.stream.Stream;
 
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.types.Type;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.framework.ServiceReference;
 
+/**
+ * The service interface acting as the aggregator of
+ * {@link ExtensionProviderFilter}.
+ *
+ * <p>
+ * The {@link Type} implementations may use this service to filter the
+ * {@link ExtensionProvider} if they are applicable to a particular
+ * {@link Resource}.
+ * </p>
+ *
+ * @since 1.0
+ */
 @ProviderType
 public interface ExtensionProviderManager {
 
+	/**
+	 * Filters the given providers if they are applicable for the given resource.
+	 *
+	 * @param          <T> the type of {@link ExtensionProvider} to filter
+	 * @param refs     the service references of the extension providers to filter
+	 * @param resource the resource to filter against
+	 * @return the stream of all the service references that are applicable to the
+	 *         given resource
+	 */
 	@NotNull
 	<T extends ExtensionProvider> Stream<ServiceReference<T>> filter(@NotNull Collection<ServiceReference<T>> refs,
 			@NotNull Resource resource);

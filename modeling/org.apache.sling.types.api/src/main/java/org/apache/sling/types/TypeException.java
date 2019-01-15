@@ -18,22 +18,28 @@
  */
 package org.apache.sling.types;
 
+/**
+ * The main exception to be thrown to indicate that the operation in the type
+ * system cannot be fulfilled.
+ *
+ * @since 1.0
+ */
 public class TypeException extends RuntimeException {
-    private static final long serialVersionUID = -4119143566082644364L;
+	private static final long serialVersionUID = -4119143566082644364L;
 
-    public TypeException() {
-        super();
-    }
+	public TypeException() {
+		super();
+	}
 
-    public TypeException(String message, Throwable cause) {
-        super(message, cause);
-    }
+	public TypeException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-    public TypeException(String message) {
-        super(message);
-    }
+	public TypeException(String message) {
+		super(message);
+	}
 
-    public TypeException(Throwable cause) {
-        super(cause);
-    }
+	public TypeException(Throwable cause) {
+		super(cause);
+	}
 }

@@ -20,15 +20,56 @@ package org.apache.sling.types.spi;
 
 import java.util.Collection;
 
+import org.apache.sling.api.adapter.Adaptable;
 import org.apache.sling.types.Type;
+import org.apache.sling.types.TypeSystem;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ConsumerType;
 
+/**
+ * The SPI to be implemented by OSGi services to provide the available
+ * {@link Type} of a particular {@link Adaptable}.
+ *
+ * <h2>Example</h2>
+ * <pre>
+ *&#64;Component(
+ *    property = {
+ *        TypeProvider.PROPERTY_RESOURCE_TYPE + "=/libs/slingshot/User"
+ *    }
+ *)
+ *public class UserTypeProvider implements TypeProvider {
+ *    &#64;Override
+ *    &#64;NotNull
+ *    public Collection&#60;&#64;NotNull Class&#60;? extends Type&#62;&#62; getAvailableTypes() {
+ *        return Arrays.asList(DataType.class);
+ *    }
+ *}</pre>
+ *
+ * @since 1.0
+ */
 @ConsumerType
 public interface TypeProvider extends ExtensionProvider {
 
+	/**
+	 * The OSGi service property name indicating this provider binds based on the
+	 * resource type.
+	 */
 	String PROPERTY_RESOURCE_TYPE = "sling.resource.resourceType";
 
-    @NotNull
-    Collection<@NotNull Class<? extends Type>> getAvailableTypes();
+	/**
+	 * Returns the available types of the current adaptable.
+	 *
+	 * <p>
+	 * For each type returned, the current adaptable can be adapted using
+	 * {@link Adaptable#adaptTo(Class)} against the type.
+	 * </p>
+	 *
+	 * <p>
+	 * The collection returned by this method is then aggregated to return the final
+	 * collection of {@link TypeSystem#getAvailableTypes()}.</p>
+	 *
+	 * @return the collection of type
+	 */
+	@NotNull
+	Collection<@NotNull Class<? extends Type>> getAvailableTypes();
 }

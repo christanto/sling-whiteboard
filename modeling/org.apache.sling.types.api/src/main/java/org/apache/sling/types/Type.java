@@ -20,6 +20,12 @@ package org.apache.sling.types;
 
 import org.osgi.annotation.versioning.ConsumerType;
 
+/**
+ * The main interface representing a type in the type system.
+ *
+ * @see TypeSystem
+ * @since 1.0
+ */
 @ConsumerType
 public interface Type {
 }

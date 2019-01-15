@@ -18,8 +18,20 @@
  */
 package org.apache.sling.types.spi;
 
+import org.apache.sling.types.Type;
 import org.osgi.annotation.versioning.ConsumerType;
 
+/**
+ * The root interface to allow the adaptable owners to participate in a
+ * particular {@link Type}.
+ *
+ * <p>
+ * In turn, the type owners can define the subclasses of this interface to allow
+ * extensibility of their types.
+ * </p>
+ *
+ * @since 1.0
+ */
 @ConsumerType
 public interface ExtensionProvider {
 }
