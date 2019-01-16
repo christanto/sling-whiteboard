@@ -21,7 +21,7 @@ package org.apache.sling.types.spi;
 import java.util.Collection;
 import java.util.stream.Stream;
 
-import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.adapter.Adaptable;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ConsumerType;
 import org.osgi.framework.ServiceReference;
@@ -29,7 +29,7 @@ import org.osgi.framework.ServiceReference;
 /**
  * The SPI to be implemented by OSGi services to filter the list of
  * {@link ExtensionProvider} if they are applicable for a particular
- * {@link Resource}.
+ * {@link Adaptable}.
  *
  * @since 1.0
  */
@@ -37,15 +37,24 @@ import org.osgi.framework.ServiceReference;
 public interface ExtensionProviderFilter {
 
 	/**
-	 * Filters the given providers if they are applicable for the given resource.
+	 * The OSGi service property name to indicate the list of fully qualified class
+	 * names that this provider is applicable to filter.
+	 */
+	String PROPERTY_ADAPTABLE_CLASSES = "sling.adaptables";
+
+	/**
+	 * Filters the given providers if they are applicable for the given adaptable.
 	 *
-	 * @param          <T> the type of {@link ExtensionProvider} to filter
-	 * @param refs     the service references of the extension providers to filter
-	 * @param resource the resource to filter against
+	 * The adaptable parameter will be one of the types declared at
+	 * {@link #PROPERTY_ADAPTABLE_CLASSES}.
+	 *
+	 * @param           <T> the type of {@link ExtensionProvider} to filter
+	 * @param refs      the service references of the extension providers to filter
+	 * @param adaptable the adaptable to filter against
 	 * @return the stream of all the service references that are applicable to the
-	 *         given resource
+	 *         given adaptable
 	 */
 	@NotNull
 	<T extends ExtensionProvider> Stream<ServiceReference<T>> filter(@NotNull Collection<ServiceReference<T>> refs,
-			@NotNull Resource resource);
+			@NotNull Adaptable adaptable);
 }

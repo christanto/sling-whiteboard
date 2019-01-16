@@ -18,12 +18,14 @@
  */
 package org.apache.sling.types.impl;
 
+import static org.apache.sling.types.spi.ExtensionProviderFilter.PROPERTY_ADAPTABLE_CLASSES;
 import static org.osgi.framework.Constants.SERVICE_RANKING;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Stream;
 
+import org.apache.sling.api.adapter.Adaptable;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.commons.osgi.PropertiesUtil;
 import org.apache.sling.types.spi.ExtensionProvider;
@@ -34,6 +36,7 @@ import org.osgi.service.component.annotations.Component;
 
 @Component(
 	property = {
+		PROPERTY_ADAPTABLE_CLASSES + "=org.apache.sling.api.resource.Resource",
         SERVICE_RANKING + "=1000"
     }
 )
@@ -43,7 +46,9 @@ public class MarkerResourceExtensionProviderFilter implements ExtensionProviderF
     @Override
     @NotNull
     public <T extends ExtensionProvider> Stream<ServiceReference<T>> filter(
-            @NotNull Collection<ServiceReference<T>> refs, @NotNull Resource resource) {
+            @NotNull Collection<ServiceReference<T>> refs, @NotNull Adaptable adaptable) {
+    	Resource resource = (Resource) adaptable;
+
         return refs.stream().filter(r -> {
             String[] types = PropertiesUtil.toStringArray(r.getProperty("sling.resource.marker.resource"));
             if (types == null) {
