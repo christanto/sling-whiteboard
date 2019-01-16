@@ -24,13 +24,49 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * The {@link TypeQualifier} for URL.
+ *
+ * <p>
+ * The supported getter return type is {@link String}.
+ * </p>
+ *
+ * <h2>Example</h2>
+ * <pre>
+ *public interface Property extends AttributesProvider {
+ *    &#64;Attribute
+ *    &#64;Url
+ *    String getDocUrl();
+ * </pre>
+ *
+ * @since 1.0
+ */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 @TypeQualifier
 public @interface Url {
 
-    boolean absolute() default true;
+	/**
+	 * Checks the absolute-ness of this URL.
+	 * <p>
+	 * Absolute here is defined as one of the following criteria:
+	 * </p>
+	 * <ol>
+	 * <li>The URL is absolute, such as
+	 * {@code http://example.org/content/page1.html}.</li>
+	 * <li>The URL is relative but its path is absolute, such as
+	 * {@code /content/page1.html}.</li>
+	 * </ol>
+	 *
+	 * @return {@code true} if it is absolute, {@code false} otherwise
+	 */
+	boolean absolute() default true;
 
-    boolean templated() default false;
+	/**
+	 * Checks if this URL is a URI Template.
+	 *
+	 * @return {@code true} if it is a URI Template, {@code false} otherwise
+	 */
+	boolean templated() default false;
 }

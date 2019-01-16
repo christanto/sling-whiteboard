@@ -24,6 +24,17 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * The marker annotation type to further qualify the type of the attribute
+ * annotated by {@link Attribute}.
+ * <p>
+ * For example, the Java type of the getter method is {@link String}, but it is
+ * actually a URL. Since one cannot simply infer that a String is always a URL,
+ * the type qualifier can be used to further qualify the type.
+ * </p>
+ *
+ * @since 1.0
+ */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.ANNOTATION_TYPE)

@@ -23,12 +23,28 @@ import java.util.Collection;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
+/**
+ * The definitions of the attributes.
+ *
+ * @since 1.0
+ */
 @ProviderType
 public interface AttributeDefinitions {
 
-    @NotNull
-    AttributeDefinition get(@NotNull String name);
+	/**
+	 * Returns the definition of the attribute with the given name.
+	 *
+	 * @param name the name of the attribute
+	 * @return the definition of the attribute
+	 */
+	@NotNull
+	AttributeDefinition get(@NotNull String name);
 
-    @NotNull
-    Collection<AttributeDefinition> getAll();
+	/**
+	 * Returns the definitions of all attributes.
+	 *
+	 * @return the collection of attribute definitions
+	 */
+	@NotNull
+	Collection<AttributeDefinition> getAll();
 }

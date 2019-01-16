@@ -21,19 +21,68 @@ package org.apache.sling.types.attributes;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
+/**
+ * The definition of an attribute.
+ *
+ * @since 1.0
+ */
 @ProviderType
 public interface AttributeDefinition {
 
-    @NotNull
-    String getName();
+	/**
+	 * Returns the name of the attribute.
+	 *
+	 * @return the name of the attribute
+	 */
+	@NotNull
+	String getName();
 
-    @NotNull
-    String getType();
+	/**
+	 * Returns the type of the attribute.
+	 * <p>
+	 * Contrast this with {@link #getTypeClass()}, this type is used to represent
+	 * the semantic type of the attribute, such as "string", "boolean", and "json",
+	 * while {@link #getTypeClass()} is used to represent the type as Java class.
+	 * </p>
+	 * <p>
+	 * For example, the semantic type can be "json", while the type class is
+	 * {@link String}, which means that the JSON is represented as String during
+	 * runtime.
+	 * </p>
+	 *
+	 * @return the type of the attribute
+	 */
+	@NotNull
+	String getType();
 
-    @NotNull
-    Class<?> getTypeClass();
+	/**
+	 * Returns the class of the attribute.
+	 * <p>
+	 * The value returned by this method is designed to work with the type parameter
+	 * of {@link Attributes#get(String, Class)}.
+	 * </p>
+	 *
+	 * @return the class of the attribute
+	 */
+	@NotNull
+	Class<?> getTypeClass();
 
-    boolean isMultiple();
+	/**
+	 * Checks if the attribute supports multiple values.
+	 *
+	 * @return {@code true} if the attribute supports multiple values, {@code false}
+	 *         otherwise
+	 */
+	boolean isMultiple();
 
-    boolean isRequired();
+	/**
+	 * Checks if the attribute is required to be present.
+	 * <p>
+	 * If an attribute is required, when {@link Attributes#containsName(String)} is
+	 * called with name of the attribute, it will return {@code true}.
+	 * </p>
+	 *
+	 * @return {@code true} if the attribute is required, {@code false} otherwise
+	 */
+	boolean isRequired();
 }

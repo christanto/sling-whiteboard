@@ -22,9 +22,20 @@ import org.apache.sling.api.SlingHttpServletRequest;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
+/**
+ * The interface that is usually passed as the method parameters of the services
+ * that process the attributes.
+ *
+ * @since 1.0
+ */
 @ProviderType
 public interface AttributeContext {
 
-    @NotNull
-    SlingHttpServletRequest getRequest();
+	/**
+	 * Returns the current servlet request.
+	 *
+	 * @return the current request
+	 */
+	@NotNull
+	SlingHttpServletRequest getRequest();
 }

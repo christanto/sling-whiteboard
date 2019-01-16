@@ -18,13 +18,31 @@
  */
 package org.apache.sling.types.attributes.commons;
 
+import org.apache.sling.types.attributes.AttributeDefinitions;
+import org.apache.sling.types.attributes.Attributes;
 import org.apache.sling.types.attributes.AttributesProvider;
+import org.apache.sling.types.attributes.annotations.Attribute;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
+/**
+ * The service interface for instantiate {@link Attributes}.
+ *
+ * @since 1.0
+ */
 @ProviderType
 public interface AttributesFactory {
 
-    @NotNull
-    <T extends AttributesProvider> WritableAttributes<T> getWritable(@NotNull Class<T> annotationSource);
+	/**
+	 * Returns a new instance of {@link WritableAttributes}. Its
+	 * {@link AttributeDefinitions} is automatically generated based on the
+	 * {@link Attribute} annotations defined in the given annotationSource.
+	 *
+	 * @param                  <T> the type of the attribute provider
+	 * @param annotationSource the source of the annotations to generate the
+	 *                         attribute definitions from
+	 * @return a new {@link WritableAttributes} instance
+	 */
+	@NotNull
+	<T extends AttributesProvider> WritableAttributes<T> getWritable(@NotNull Class<T> annotationSource);
 }

@@ -51,8 +51,8 @@ import org.osgi.annotation.versioning.ConsumerType;
 public interface TypeProvider extends ExtensionProvider {
 
 	/**
-	 * The OSGi service property name indicating this provider binds based on the
-	 * resource type.
+	 * The OSGi service property name to indicate the resource type this provider
+	 * binds to.
 	 */
 	String PROPERTY_RESOURCE_TYPE = "sling.resource.resourceType";
 

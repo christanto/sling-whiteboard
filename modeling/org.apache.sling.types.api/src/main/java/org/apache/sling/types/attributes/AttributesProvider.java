@@ -21,9 +21,26 @@ package org.apache.sling.types.attributes;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ConsumerType;
 
+/**
+ * Provides the {@link Attributes}.
+ *
+ * <p>
+ * This interface is usually implemented by the type's domain entity to hold its
+ * attributes. For example, the Property of DataType, which may be represented
+ * as a set of key-value pairs (the attributes) may implement this interface to
+ * hold the pairs.
+ * </p>
+ *
+ * @since 1.0
+ */
 @ConsumerType
 public interface AttributesProvider {
 
-    @NotNull
-    Attributes getAttributes();
+	/**
+	 * Returns the attributes of this domain entity.
+	 *
+	 * @return the attributes
+	 */
+	@NotNull
+	Attributes getAttributes();
 }

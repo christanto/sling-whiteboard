@@ -21,12 +21,43 @@ package org.apache.sling.types.attributes.commons;
 import org.apache.sling.types.TypeException;
 import org.apache.sling.types.attributes.AttributeContext;
 import org.apache.sling.types.attributes.AttributeDefinition;
+import org.apache.sling.types.attributes.spi.AttributeHandler;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
+/**
+ * The service interface to perform attribute processing.
+ * <p>
+ * To participate of the processing, one needs to register
+ * {@link AttributeHandler}.
+ * </p>
+ *
+ * @since 1.0
+ */
 @ProviderType
 public interface AttributeService {
 
+	/**
+	 * Performs the post-processing of the given attribute value for the purpose of
+	 * exporting it outside the system.
+	 * <p>
+	 * For example, an attribute with URL type may have the value =
+	 * {@code /content/page1.html} which refers relatively to the current servlet
+	 * context. So when the attribute needs to be exported outside the system, the
+	 * servlet context path may need to be applied first, giving the final value =
+	 * {@code /ctx/content/page1.html}.
+	 * </p>
+	 * <p>
+	 * Another example is an attribute with value that needs to be internationalized
+	 * based on the current request locale.
+	 * </p>
+	 *
+	 * @param ctx   the context of the processing
+	 * @param def   the definition of the attribute whose value is processed
+	 * @param value the value of the attribute to process
+	 * @return the processed value
+	 * @throws TypeException when error occurs related to type
+	 */
 	@NotNull
 	Object process(@NotNull AttributeContext ctx, @NotNull AttributeDefinition def, @NotNull Object value)
 			throws TypeException;

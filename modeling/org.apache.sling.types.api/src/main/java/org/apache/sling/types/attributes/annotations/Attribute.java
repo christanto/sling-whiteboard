@@ -24,10 +24,41 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.apache.sling.types.attributes.AttributeDefinition;
+import org.apache.sling.types.attributes.AttributesProvider;
+
+/**
+ * The getter method annotated by this annotation represents an attribute.
+ *
+ * <p>
+ * Given the following example:
+ * </p>
+ *
+ * <pre>
+ *public interface Property extends AttributesProvider {
+ *    &#64;Attribute("sling:id")
+ *    String getId();</pre>
+ * <p>
+ * The {@code getId()} above represents an attribute named {@code sling:id}.
+ * </p>
+ * <p>
+ * Furthermore, when inspected via {@link AttributesProvider#getAttributes()},
+ * there is an {@link AttributeDefinition} existed representing
+ * {@code sling:id}.
+ * </p>
+ *
+ * @since 1.0
+ */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Attribute {
 
-    String value() default "";
+	/**
+	 * The name of the attribute.
+	 *
+	 * @return the name of attribute. When it is empty string, the name is inferred
+	 *         from the name of the getter method.
+	 */
+	String value() default "";
 }
