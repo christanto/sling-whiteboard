@@ -20,10 +20,10 @@ package org.apache.sling.sample.types.entity.commons.impl;
 
 import java.util.Optional;
 
+import org.apache.sling.api.adapter.Adaptable;
 import org.apache.sling.sample.types.entity.Prop;
 import org.apache.sling.sample.types.entity.commons.EntityService;
 import org.apache.sling.types.TypeException;
-import org.apache.sling.types.TypeSystem;
 import org.apache.sling.types.data.DataType;
 import org.apache.sling.types.data.Property;
 import org.jetbrains.annotations.NotNull;
@@ -35,7 +35,8 @@ public class EntityServiceImpl implements EntityService {
 	@SuppressWarnings("null")
 	@Override
 	@NotNull
-	public Optional<Property> getProperty(@NotNull TypeSystem typeSystem, @NotNull Prop prop) throws TypeException {
-		return typeSystem.getType(DataType.class).flatMap(m -> m.getPropertyById(Optional.of(prop.getBinding())));
+	public Optional<Property> getProperty(@NotNull Adaptable adaptable, @NotNull Prop prop) throws TypeException {
+		return Optional.<DataType>ofNullable(adaptable.adaptTo(DataType.class))
+				.flatMap(m -> m.getPropertyById(Optional.of(prop.getBinding())));
 	}
 }

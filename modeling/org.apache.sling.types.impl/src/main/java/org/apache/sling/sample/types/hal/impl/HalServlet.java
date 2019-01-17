@@ -199,7 +199,7 @@ public class HalServlet extends SlingSafeMethodsServlet {
             Map<String, Object> map = new LinkedHashMap<>();
 
         	for (Prop p : entity.getProperties()) {
-        		entityService.getProperty(ctx.getTypeSystem(), p)
+        		entityService.getProperty(ctx.getAdaptable(), p)
         			.ifPresent(property -> propertyService.getValue(ctx, property)
     					.ifPresent(v -> map.put(property.getId(), v))
 					);

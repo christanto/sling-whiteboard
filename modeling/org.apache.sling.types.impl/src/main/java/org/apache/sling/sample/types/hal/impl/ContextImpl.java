@@ -31,14 +31,10 @@ public class ContextImpl implements Context<Resource> {
     private Resource resource;
 
     @NotNull
-    private TypeSystem typeSystem;
-
-    @NotNull
     private Locale locale;
 
     public ContextImpl(@NotNull Resource resource, @NotNull TypeSystem typeSystem, @NotNull Locale locale) {
         this.resource = resource;
-        this.typeSystem = typeSystem;
         this.locale = locale;
     }
 
@@ -46,12 +42,6 @@ public class ContextImpl implements Context<Resource> {
     @NotNull
     public Resource getAdaptable() {
         return resource;
-    }
-
-    @Override
-    @NotNull
-    public TypeSystem getTypeSystem() {
-        return typeSystem;
     }
 
     @Override

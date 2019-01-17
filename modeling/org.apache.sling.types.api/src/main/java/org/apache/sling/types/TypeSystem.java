@@ -19,7 +19,6 @@
 package org.apache.sling.types;
 
 import java.util.Collection;
-import java.util.Optional;
 
 import org.apache.sling.api.adapter.Adaptable;
 import org.apache.sling.types.data.DataType;
@@ -98,21 +97,4 @@ public interface TypeSystem {
 	 */
 	@NotNull
 	Collection<@NotNull Class<? extends Type>> getAvailableTypes();
-
-	/**
-	 * Returns the type instance as the result of the adaptation of the current
-	 * adaptable against the given typeClass.
-	 *
-	 * <p>
-	 * When passing the {@code typeClass} parameter taken from
-	 * {@link #getAvailableTypes()}, this method SHOULD return non-empty optional.
-	 * </p>
-	 *
-	 * @param <T> the type whose instance to get
-	 * @param typeClass the type to be adapted against
-	 * @return A non-empty optional when the adaptation is successful, empty
-	 *         optional otherwise
-	 */
-	@NotNull
-	<T extends Type> Optional<T> getType(@NotNull Class<T> typeClass);
 }

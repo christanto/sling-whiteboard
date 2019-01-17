@@ -20,14 +20,13 @@ package org.apache.sling.types.impl;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.sling.api.adapter.AdapterFactory;
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.types.TypeSystem;
 import org.apache.sling.types.Type;
+import org.apache.sling.types.TypeSystem;
 import org.apache.sling.types.spi.ExtensionProviderManager;
 import org.apache.sling.types.spi.TypeProvider;
 import org.jetbrains.annotations.NotNull;
@@ -81,13 +80,6 @@ public class TypeSystemAdapterFactory implements AdapterFactory {
             @NotNull
             public Collection<@NotNull Class<? extends Type>> getAvailableTypes() {
                 return types;
-            }
-
-            @SuppressWarnings("null")
-            @Override
-            @NotNull
-            public <T extends Type> Optional<T> getType(@NotNull Class<T> typeClass) {
-                return Optional.ofNullable(resource.adaptTo(typeClass));
             }
         };
     }

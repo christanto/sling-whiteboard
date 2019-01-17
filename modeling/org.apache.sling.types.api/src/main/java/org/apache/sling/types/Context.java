@@ -39,8 +39,5 @@ public interface Context<T extends Adaptable> {
 	T getAdaptable();
 
 	@NotNull
-	TypeSystem getTypeSystem();
-
-	@NotNull
 	Locale getLocale();
 }

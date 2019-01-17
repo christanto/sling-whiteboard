@@ -20,9 +20,9 @@ package org.apache.sling.sample.types.entity.commons;
 
 import java.util.Optional;
 
+import org.apache.sling.api.adapter.Adaptable;
 import org.apache.sling.sample.types.entity.Prop;
 import org.apache.sling.types.TypeException;
-import org.apache.sling.types.TypeSystem;
 import org.apache.sling.types.data.Property;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
@@ -31,5 +31,5 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface EntityService {
 
 	@NotNull
-	Optional<Property> getProperty(@NotNull TypeSystem typeSystem, @NotNull Prop prop) throws TypeException;
+	Optional<Property> getProperty(@NotNull Adaptable adaptable, @NotNull Prop prop) throws TypeException;
 }
