@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AttributeServiceImpl implements AttributeService {
 
     @Reference
-    private volatile Collection<ServiceReference<AttributeHandler<AttributeDefinition<?>, ?>>> handlers;
+    private volatile Collection<ServiceReference<AttributeHandler<? extends AttributeDefinition<?>, ?>>> handlers;
 
     private BundleContext bundleContext;
 
