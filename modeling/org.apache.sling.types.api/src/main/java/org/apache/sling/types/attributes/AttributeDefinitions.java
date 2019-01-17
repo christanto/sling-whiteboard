@@ -38,7 +38,7 @@ public interface AttributeDefinitions {
 	 * @return the definition of the attribute
 	 */
 	@NotNull
-	AttributeDefinition get(@NotNull String name);
+	AttributeDefinition<?> get(@NotNull String name);
 
 	/**
 	 * Returns the definitions of all attributes.
@@ -46,5 +46,5 @@ public interface AttributeDefinitions {
 	 * @return the collection of attribute definitions
 	 */
 	@NotNull
-	Collection<AttributeDefinition> getAll();
+	Collection<AttributeDefinition<?>> getAll();
 }

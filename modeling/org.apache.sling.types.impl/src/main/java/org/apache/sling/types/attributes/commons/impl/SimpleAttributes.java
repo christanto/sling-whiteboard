@@ -99,7 +99,7 @@ class SimpleAttributes<T extends AttributesProvider> implements WritableAttribut
             BeanInfo bean = Introspector.getBeanInfo(annotationSource);
 
             Arrays.stream(bean.getPropertyDescriptors())
-                .map(SimpleAttributes::getDefinition)
+                .map(d -> getDefinition(d))
                 .filter(Objects::nonNull)
                 .forEach(this::defineAttribute);
         } catch (IntrospectionException e) {
@@ -107,12 +107,12 @@ class SimpleAttributes<T extends AttributesProvider> implements WritableAttribut
         }
     }
 
-    private void defineAttribute(AttributeDefinition attr) {
+    private void defineAttribute(AttributeDefinition<?> attr) {
         definitions.map.put(attr.getName(), attr);
     }
 
     @Nullable
-    private static AttributeDefinition getDefinition(@NotNull PropertyDescriptor prop) throws TypeException {
+    private static AttributeDefinition<?> getDefinition(@NotNull PropertyDescriptor prop) throws TypeException {
         Method readMethod = prop.getReadMethod();
 
         @NotNull
@@ -177,19 +177,19 @@ class SimpleAttributes<T extends AttributesProvider> implements WritableAttribut
 
     private static class AttributeDefinitionsImpl implements AttributeDefinitions {
 
-        private Map<String, AttributeDefinition> map = new LinkedHashMap<>();
+        private Map<String, AttributeDefinition<?>> map = new LinkedHashMap<>();
 
         @SuppressWarnings("null")
         @Override
         @NotNull
-        public AttributeDefinition get(@NotNull String name) {
+        public AttributeDefinition<?> get(@NotNull String name) {
             return map.get(name);
         }
 
         @SuppressWarnings("null")
         @Override
         @NotNull
-        public Collection<AttributeDefinition> getAll() {
+        public Collection<AttributeDefinition<?>> getAll() {
             return Collections.unmodifiableCollection(map.values());
         }
     }

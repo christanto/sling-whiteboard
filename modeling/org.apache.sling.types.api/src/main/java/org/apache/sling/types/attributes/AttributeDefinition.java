@@ -24,10 +24,12 @@ import org.osgi.annotation.versioning.ProviderType;
 /**
  * The definition of an attribute.
  *
+ * @param <T> the type of attribute as per {@link #getTypeClass()}
+ *
  * @since 1.0
  */
 @ProviderType
-public interface AttributeDefinition {
+public interface AttributeDefinition<T> {
 
 	/**
 	 * Returns the name of the attribute.
@@ -65,7 +67,7 @@ public interface AttributeDefinition {
 	 * @return the class of the attribute
 	 */
 	@NotNull
-	Class<?> getTypeClass();
+	Class<T> getTypeClass();
 
 	/**
 	 * Checks if the attribute supports multiple values.

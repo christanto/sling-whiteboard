@@ -20,7 +20,7 @@ package org.apache.sling.types.attributes.commons.impl;
 
 import org.jetbrains.annotations.NotNull;
 
-class BooleanDefinition extends SimpleDefinition<BooleanDefinition> {
+class BooleanDefinition extends SimpleDefinition<BooleanDefinition, Boolean> {
     public BooleanDefinition(@NotNull String name) {
         super(name, "sling:boolean", Boolean.class);
     }

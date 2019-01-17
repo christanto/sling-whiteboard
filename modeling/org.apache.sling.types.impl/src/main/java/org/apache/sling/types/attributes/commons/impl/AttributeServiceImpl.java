@@ -38,25 +38,29 @@ import org.osgi.service.component.annotations.Reference;
 public class AttributeServiceImpl implements AttributeService {
 
     @Reference
-    private volatile Collection<ServiceReference<AttributeHandler<AttributeDefinition>>> handlers;
+    private volatile Collection<ServiceReference<AttributeHandler<AttributeDefinition<?>, ?>>> handlers;
 
     private BundleContext bundleContext;
 
     @SuppressWarnings("null")
     @Override
     @NotNull
-    public Object process(@NotNull AttributeContext ctx, @NotNull AttributeDefinition def, @NotNull Object value)
-            throws TypeException {
-        return findAttributeHandler(def).map(h -> h.process(ctx, def, value)).orElse(value);
-    }
+	public <T> T process(@NotNull AttributeContext ctx, @NotNull AttributeDefinition<T> def, @NotNull T value)
+			throws TypeException {
+		return findAttributeHandler(def).map(h -> h.process(ctx, def, value)).orElse(value);
+	}
 
-    @SuppressWarnings("null")
-    @NotNull
-    private Optional<AttributeHandler<AttributeDefinition>> findAttributeHandler(@NotNull AttributeDefinition def) {
-        return handlers.stream().filter(r -> {
+    @SuppressWarnings({ "null", "unchecked" })
+	@NotNull
+    private <T> Optional<AttributeHandler<AttributeDefinition<T>, T>> findAttributeHandler(@NotNull AttributeDefinition<T> def) {
+    	return handlers.stream().filter(r -> {
             String type = PropertiesUtil.toString(r.getProperty(AttributeHandler.PROPERTY_TYPE), null);
             return def.getType().equals(type);
-        }).findFirst().map(bundleContext::getService);
+        }).findFirst().map(r -> {
+        	@SuppressWarnings("rawtypes")
+        	AttributeHandler service = bundleContext.getService(r);
+			return service;
+        });
     }
 
     @Activate

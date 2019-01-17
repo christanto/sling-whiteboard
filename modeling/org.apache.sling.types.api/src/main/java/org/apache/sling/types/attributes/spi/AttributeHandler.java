@@ -28,11 +28,13 @@ import org.osgi.annotation.versioning.ConsumerType;
  * The SPI to be implemented by OSGi services to do attribute processing.
  *
  * @param <T> the type of the attribute definition this handler is handling
+ * @param <V> the type of the attribute as per
+ *        {@link AttributeDefinition#getTypeClass()}
  *
  * @since 1.0
  */
 @ConsumerType
-public interface AttributeHandler<T extends AttributeDefinition> {
+public interface AttributeHandler<T extends AttributeDefinition<V>, V> {
 
 	/**
 	 * The OSGi service property name to indicate the attribute type
@@ -63,5 +65,5 @@ public interface AttributeHandler<T extends AttributeDefinition> {
 	 * @throws TypeException when error occurs related to type
 	 */
 	@NotNull
-	Object process(@NotNull AttributeContext ctx, @NotNull T def, @NotNull Object value) throws TypeException;
+	V process(@NotNull AttributeContext ctx, @NotNull T def, @NotNull V value) throws TypeException;
 }

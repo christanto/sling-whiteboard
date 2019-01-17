@@ -21,15 +21,15 @@ package org.apache.sling.types.attributes.commons.impl;
 import org.apache.sling.types.attributes.AttributeDefinition;
 import org.jetbrains.annotations.NotNull;
 
-class SimpleDefinition<T extends AttributeDefinition> implements AttributeDefinition {
+class SimpleDefinition<T extends AttributeDefinition<V>, V> implements AttributeDefinition<V> {
 
     private @NotNull String name;
     private @NotNull String type;
-    private @NotNull Class<?> typeClass;
+    private @NotNull Class<V> typeClass;
     private boolean multiple;
     private boolean required;
 
-    public SimpleDefinition(@NotNull String name, @NotNull String type, @NotNull Class<?> typeClass) {
+    public SimpleDefinition(@NotNull String name, @NotNull String type, @NotNull Class<V> typeClass) {
         this.name = name;
         this.type = type;
         this.typeClass = typeClass;
@@ -49,7 +49,7 @@ class SimpleDefinition<T extends AttributeDefinition> implements AttributeDefini
 
     @Override
     @NotNull
-    public Class<?> getTypeClass() {
+    public Class<V> getTypeClass() {
         return typeClass;
     }
 

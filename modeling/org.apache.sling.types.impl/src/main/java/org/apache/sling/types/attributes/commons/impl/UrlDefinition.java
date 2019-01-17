@@ -24,7 +24,7 @@ import org.apache.sling.types.attributes.spi.AttributeHandler;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.service.component.annotations.Component;
 
-class UrlDefinition extends SimpleDefinition<UrlDefinition> {
+class UrlDefinition extends SimpleDefinition<UrlDefinition, String> {
     @NotNull
     private static final String TYPE = "sling:url";
 
@@ -68,15 +68,15 @@ class UrlDefinition extends SimpleDefinition<UrlDefinition> {
             AttributeHandler.PROPERTY_TYPE + "=" + TYPE
         }
     )
-    public static class UrlAttributeHandler implements AttributeHandler<UrlDefinition> {
-        @Override
-        @NotNull
-        public Object process(@NotNull AttributeContext ctx, @NotNull UrlDefinition def, @NotNull Object value)
-                throws TypeException {
-            if (def.isAbsolute()) {
-                return ctx.getRequest().getContextPath() + value;
-            }
-            return value;
-        }
+    public static class UrlAttributeHandler implements AttributeHandler<UrlDefinition, String> {
+		@Override
+		@NotNull
+		public String process(@NotNull AttributeContext ctx, @NotNull UrlDefinition def, @NotNull String value)
+				throws TypeException {
+			if (def.isAbsolute()) {
+				return ctx.getRequest().getContextPath() + value;
+			}
+			return value;
+		}
     }
 }

@@ -20,7 +20,7 @@ package org.apache.sling.types.attributes.commons.impl;
 
 import org.jetbrains.annotations.NotNull;
 
-class NumberDefinition extends SimpleDefinition<NumberDefinition> {
+class NumberDefinition extends SimpleDefinition<NumberDefinition, Long> {
     public NumberDefinition(@NotNull String name) {
         super(name, "sling:number", Long.class);
     }

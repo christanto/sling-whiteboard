@@ -52,6 +52,7 @@ public interface AttributeService {
 	 * based on the current request locale.
 	 * </p>
 	 *
+	 * @param       <T> the type of the attribute value
 	 * @param ctx   the context of the processing
 	 * @param def   the definition of the attribute whose value is processed
 	 * @param value the value of the attribute to process
@@ -59,6 +60,6 @@ public interface AttributeService {
 	 * @throws TypeException when error occurs related to type
 	 */
 	@NotNull
-	Object process(@NotNull AttributeContext ctx, @NotNull AttributeDefinition def, @NotNull Object value)
+	<T> T process(@NotNull AttributeContext ctx, @NotNull AttributeDefinition<T> def, @NotNull T value)
 			throws TypeException;
 }
