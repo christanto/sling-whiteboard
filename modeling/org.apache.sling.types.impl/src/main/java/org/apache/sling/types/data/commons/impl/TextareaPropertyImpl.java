@@ -30,13 +30,10 @@ import org.apache.sling.types.data.commons.TextareaProperty;
 import org.apache.sling.types.data.spi.PropertyHandler;
 import org.apache.sling.types.data.validation.commons.Errors;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-class TextareaPropertyImpl extends SimpleProperty<TextareaProperty> implements TextareaProperty {
-    @NotNull
-    private static final String TYPE = "sling:textarea";
+class TextareaPropertyImpl extends SimpleProperty<TextareaProperty, String> implements TextareaProperty {
 
     public TextareaPropertyImpl(@NotNull AttributesFactory attrsFactory, @NotNull String id, @NotNull String name) {
         super(attrsFactory, id, name, TYPE);
@@ -48,7 +45,7 @@ class TextareaPropertyImpl extends SimpleProperty<TextareaProperty> implements T
             PropertyHandler.PROPERTY_TYPE + "=" + TYPE
         }
     )
-    public class TextareaPropertyHandler extends SimplePropertyHandler<TextareaProperty> {
+    public class TextareaPropertyHandler extends SimplePropertyHandler<TextareaProperty, String> {
         @Reference
         private Errors errors;
 
@@ -57,14 +54,15 @@ class TextareaPropertyImpl extends SimpleProperty<TextareaProperty> implements T
             return errors;
         }
 
-        @Override
-        @Nullable
-        protected Object getValue(@NotNull TextareaProperty property, @NotNull ValueMap vm) throws TypeException {
-            return vm.get(property.getName(), String.class);
+        @SuppressWarnings("null")
+		@Override
+        @NotNull
+        protected String[] getValue(@NotNull TextareaProperty property, @NotNull ValueMap vm) throws TypeException {
+            return vm.get(property.getName(), new String[0]);
         }
 
         @Override
-        protected Object[] convertParams(@NotNull TextareaProperty property, RequestParameter... params)
+        protected String[] convertParams(@NotNull TextareaProperty property, RequestParameter... params)
                 throws TypeException {
             return Arrays.stream(params).map(p -> p.getString()).toArray(String[]::new);
         }

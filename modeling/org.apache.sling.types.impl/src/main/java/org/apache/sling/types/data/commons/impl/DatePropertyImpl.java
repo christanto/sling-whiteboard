@@ -32,13 +32,10 @@ import org.apache.sling.types.data.commons.SimplePropertyHandler;
 import org.apache.sling.types.data.spi.PropertyHandler;
 import org.apache.sling.types.data.validation.commons.Errors;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-class DatePropertyImpl extends SimpleProperty<DateProperty> implements DateProperty {
-    @NotNull
-    private static final String TYPE = "sling:date";
+class DatePropertyImpl extends SimpleProperty<DateProperty, Calendar> implements DateProperty {
 
     public DatePropertyImpl(@NotNull AttributesFactory attrsFactory, @NotNull String id, @NotNull String name) {
         super(attrsFactory, id, name, TYPE);
@@ -47,10 +44,10 @@ class DatePropertyImpl extends SimpleProperty<DateProperty> implements DatePrope
     @Component(
         service = PropertyHandler.class,
         property = {
-            PropertyHandler.PROPERTY_TYPE + "=" + TYPE
+            PropertyHandler.PROPERTY_TYPE + "=" + DateProperty.TYPE
         }
     )
-    public class DatePropertyHandler extends SimplePropertyHandler<DateProperty> {
+    public class DatePropertyHandler extends SimplePropertyHandler<DateProperty, Calendar> {
         @Reference
         private Errors errors;
 
@@ -59,14 +56,15 @@ class DatePropertyImpl extends SimpleProperty<DateProperty> implements DatePrope
             return errors;
         }
 
-        @Override
-        @Nullable
-        protected Object getValue(@NotNull DateProperty property, @NotNull ValueMap vm) throws TypeException {
-            return vm.get(property.getName(), Calendar.class);
+        @SuppressWarnings("null")
+		@Override
+        @NotNull
+        protected Calendar[] getValue(@NotNull DateProperty property, @NotNull ValueMap vm) throws TypeException {
+            return vm.get(property.getName(), new Calendar[0]);
         }
 
         @Override
-        protected Object[] convertParams(@NotNull DateProperty property, RequestParameter... params)
+        protected Calendar[] convertParams(@NotNull DateProperty property, RequestParameter... params)
                 throws TypeException {
             return Arrays.stream(params)
                 .map(RequestParameter::getString)

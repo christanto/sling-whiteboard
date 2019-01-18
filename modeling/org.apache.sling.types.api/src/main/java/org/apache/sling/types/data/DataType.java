@@ -22,18 +22,39 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.sling.types.Type;
+import org.apache.sling.types.data.spi.PropertyProvider;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ConsumerType;
 
+/**
+ * Type that describes a resource from the perspective of data.
+ *
+ * @since 1.0
+ */
 @ConsumerType
 public interface DataType extends Type {
 
-    @NotNull
-    List<@NotNull Property> getProperties();
+	/**
+	 * Returns the properties of this DataType.
+	 * <p>
+	 * To participate in returning the properties, one needs to register
+	 * {@link PropertyProvider}.
+	 * </p>
+	 *
+	 * @return the list of properties of this DataType
+	 */
+	@NotNull
+	List<@NotNull Property<?>> getProperties();
 
-    @SuppressWarnings("null")
-    @NotNull
-    default Optional<Property> getPropertyById(@NotNull Optional<String> id) {
-        return getProperties().stream().filter(p -> Optional.of(p.getId()).equals(id)).findFirst();
-    }
+	/**
+	 * Returns the property of the given ID in this DataType.
+	 *
+	 * @param id the {@link Property#getId()}
+	 * @return the property with the given ID
+	 */
+	@SuppressWarnings("null")
+	@NotNull
+	default Optional<Property<?>> getPropertyById(@NotNull Optional<String> id) {
+		return getProperties().stream().filter(p -> Optional.of(p.getId()).equals(id)).findFirst();
+	}
 }

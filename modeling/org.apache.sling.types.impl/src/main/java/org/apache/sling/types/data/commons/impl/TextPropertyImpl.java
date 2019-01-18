@@ -30,13 +30,10 @@ import org.apache.sling.types.data.commons.TextProperty;
 import org.apache.sling.types.data.spi.PropertyHandler;
 import org.apache.sling.types.data.validation.commons.Errors;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-class TextPropertyImpl extends SimpleProperty<TextProperty> implements TextProperty {
-    @NotNull
-    private static final String TYPE = "sling:text";
+class TextPropertyImpl extends SimpleProperty<TextProperty, String> implements TextProperty {
 
     public TextPropertyImpl(@NotNull AttributesFactory attrsFactory, @NotNull String id, @NotNull String name) {
         super(attrsFactory, id, name, TYPE);
@@ -48,7 +45,7 @@ class TextPropertyImpl extends SimpleProperty<TextProperty> implements TextPrope
             PropertyHandler.PROPERTY_TYPE + "=" + TYPE
         }
     )
-    public static class TextPropertyHandler extends SimplePropertyHandler<TextProperty> {
+    public static class TextPropertyHandler extends SimplePropertyHandler<TextProperty, String> {
         @Reference
         private Errors errors;
 
@@ -57,14 +54,15 @@ class TextPropertyImpl extends SimpleProperty<TextProperty> implements TextPrope
             return errors;
         }
 
-        @Override
-        @Nullable
-        protected Object getValue(@NotNull TextProperty property, @NotNull ValueMap vm) throws TypeException {
-            return vm.get(property.getName(), String.class);
+        @SuppressWarnings("null")
+		@Override
+        @NotNull
+        protected String[] getValue(@NotNull TextProperty property, @NotNull ValueMap vm) throws TypeException {
+            return vm.get(property.getName(), new String[0]);
         }
 
         @Override
-        protected Object[] convertParams(@NotNull TextProperty property, RequestParameter... params)
+        protected String[] convertParams(@NotNull TextProperty property, RequestParameter... params)
                 throws TypeException {
             return Arrays.stream(params).map(RequestParameter::getString).toArray(String[]::new);
         }

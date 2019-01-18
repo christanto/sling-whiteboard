@@ -22,36 +22,93 @@ import org.apache.sling.types.data.Property;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
+/**
+ * The writable version of {@link Property}.
+ *
+ * @param <T> the type of the property
+ * @param <V> the type of the value of the property
+ *
+ * @since 1.0
+ */
 @ProviderType
-public interface WritableProperty<T extends Property> extends Property {
+public interface WritableProperty<T extends Property<V>, V> extends Property<V> {
 
-    @NotNull
-    T withTitle(@NotNull String title);
+	/**
+	 * Setter of {@link #getTitle()}.
+	 *
+	 * @param title the title of the property
+	 * @return {@code this} instance for chaining
+	 */
+	@NotNull
+	T withTitle(@NotNull String title);
 
-    @NotNull
-    default T withMultiple() {
-        return withMultiple(true);
-    }
+	/**
+	 * The setter of {@link #isMultiple()} with {@code true} value.
+	 *
+	 * @return {@code this} instance for chaining
+	 */
+	@NotNull
+	default T withMultiple() {
+		return withMultiple(true);
+	}
 
-    @NotNull
-    T withMultiple(boolean multiple);
+	/**
+	 * Setter of {@link #isMultiple()}.
+	 *
+	 * @param multiple {@code true} if this property accepts multiple values,
+	 *                 {@code false} otherwise
+	 * @return {@code this} instance for chaining
+	 */
+	@NotNull
+	T withMultiple(boolean multiple);
 
-    @NotNull
-    default T withReadonly() {
-        return withReadonly(true);
-    }
+	/**
+	 * The setter of {@link #isReadonly()} with {@code true} value.
+	 *
+	 * @return {@code this} instance for chaining
+	 */
+	@NotNull
+	default T withReadonly() {
+		return withReadonly(true);
+	}
 
-    @NotNull
-    T withReadonly(boolean readonly);
+	/**
+	 * Setter of {@link #isReadonly()}.
+	 *
+	 * @param readonly {@code true} to make this property as read-only,
+	 *                 {@code false} otherwise
+	 * @return {@code this} instance for chaining
+	 */
+	@NotNull
+	T withReadonly(boolean readonly);
 
-    @NotNull
-    default T withRequired() {
-        return withRequired(true);
-    }
+	/**
+	 * The setter of {@link #isRequired()} with {@code true} value.
+	 *
+	 * @return {@code this} instance for chaining
+	 */
+	@NotNull
+	default T withRequired() {
+		return withRequired(true);
+	}
 
-    @NotNull
-    T withRequired(boolean required);
+	/**
+	 * Setter of {@link #isRequired()}.
+	 *
+	 * @param required {@code true} to make this property as required, {@code false}
+	 *                 otherwise
+	 * @return {@code this} instance for chaining
+	 */
+	@NotNull
+	T withRequired(boolean required);
 
-    @NotNull
-    T withValidations(String... validations);
+	/**
+	 * Setter of {@link #getValidations()}.
+	 *
+	 * @param validations the array of validation names, such as
+	 *                    {@code sling:email}, {@code sling:jcr:name}
+	 * @return {@code this} instance for chaining
+	 */
+	@NotNull
+	T withValidations(String... validations);
 }

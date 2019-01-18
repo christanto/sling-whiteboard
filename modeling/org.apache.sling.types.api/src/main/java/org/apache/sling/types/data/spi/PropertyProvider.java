@@ -20,16 +20,36 @@ package org.apache.sling.types.data.spi;
 
 import java.util.List;
 
+import org.apache.sling.api.adapter.Adaptable;
 import org.apache.sling.types.TypeException;
+import org.apache.sling.types.data.DataType;
 import org.apache.sling.types.data.Property;
 import org.apache.sling.types.spi.ExtensionProvider;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ConsumerType;
 
+/**
+ * The SPI to be implemented by OSGi services to provide the available
+ * {@link Property} of a particular {@link Adaptable}.
+ *
+ * @since 1.0
+ */
 @ConsumerType
 public interface PropertyProvider extends ExtensionProvider {
 
+	/**
+	 * The OSGi service property name to indicate the resource type this provider
+	 * binds to.
+	 */
 	String PROPERTY_RESOURCE_TYPE = "sling.resource.resourceType";
 
-    List<@NotNull Property> getProperties() throws TypeException;
+	/**
+	 * Returns the properties to be part of the {@link DataType} of a particular
+	 * {@link Adaptable}.
+	 *
+	 * @return the list of {@link Property}
+	 * @throws TypeException when error occurs related to type
+	 */
+	@NotNull
+	List<@NotNull Property<?>> getProperties() throws TypeException;
 }

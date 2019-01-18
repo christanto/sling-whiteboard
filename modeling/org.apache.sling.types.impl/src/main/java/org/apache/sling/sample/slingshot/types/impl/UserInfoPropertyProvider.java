@@ -50,7 +50,7 @@ public class UserInfoPropertyProvider implements PropertyProvider {
     @SuppressWarnings("null")
     @Override
     @NotNull
-    public List<@NotNull Property> getProperties() {
+    public List<@NotNull Property<?>> getProperties() {
         return Arrays.asList(
             properties.text("name", "name").withTitle("Name"),
             properties.text("about", "about").withTitle("About Me")

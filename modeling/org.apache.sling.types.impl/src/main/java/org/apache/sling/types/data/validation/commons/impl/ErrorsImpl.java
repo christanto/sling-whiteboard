@@ -28,9 +28,9 @@ import org.osgi.service.component.annotations.Component;
 @Component
 public class ErrorsImpl implements Errors {
 
-    @Override
-    @NotNull
-    public RequiredError required(@NotNull Property property, RequestParameter... params) {
-        return new RequiredErrorImpl(property, params);
-    }
+	@Override
+	@NotNull
+	public <T extends Property<V>, V> RequiredError<T, V> required(@NotNull T property, RequestParameter... params) {
+		return new RequiredErrorImpl<>(property, params);
+	}
 }

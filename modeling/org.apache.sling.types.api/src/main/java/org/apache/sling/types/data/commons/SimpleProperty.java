@@ -24,78 +24,119 @@ import org.apache.sling.types.attributes.commons.WritableAttributes;
 import org.apache.sling.types.data.Property;
 import org.jetbrains.annotations.NotNull;
 
-public class SimpleProperty<T extends Property> implements WritableProperty<T> {
+/**
+ * The base class to implement {@link Property}.
+ *
+ * @param <T> the type of the property
+ * @param <V> the type of the value of the property
+ *
+ * @since 1.0
+ */
+public class SimpleProperty<T extends Property<V>, V> implements WritableProperty<T, V> {
 
-    @SuppressWarnings("rawtypes")
-    @NotNull
-    protected WritableAttributes<? extends SimpleProperty> attrs;
+	/**
+	 * The attributes of this property.
+	 * <p>
+	 * All the attributes are stored here.
+	 * </p>
+	 */
+	@SuppressWarnings("rawtypes")
+	@NotNull
+	protected WritableAttributes<? extends SimpleProperty> attrs;
 
-    public SimpleProperty(@NotNull AttributesFactory attrsFactory, @NotNull String id, @NotNull String name,
-            @NotNull String type) {
-        this.attrs = attrsFactory.getWritable(getClass());
+	/**
+	 * Instantiates a new property.
+	 *
+	 * @param attrsFactory the factory to create a new {@link Attributes}
+	 * @param id           the {@link Property#getId()}
+	 * @param name         the {@link Property#getName()}
+	 * @param type         the {@link Property#getType()}
+	 */
+	public SimpleProperty(@NotNull AttributesFactory attrsFactory, @NotNull String id, @NotNull String name,
+			@NotNull String type) {
+		this.attrs = attrsFactory.getWritable(getClass());
 
-        attrs.put("sling:id", id);
-        attrs.put("sling:name", name);
-        attrs.put("sling:type", type);
-    }
+		attrs.put("sling:id", id);
+		attrs.put("sling:name", name);
+		attrs.put("sling:type", type);
+	}
 
-    @SuppressWarnings("unchecked")
-    @Override
-    @NotNull
-    public T withTitle(@NotNull String title) {
-        attrs.put("sling:title", title);
-        return (T) this;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	@NotNull
+	public T withTitle(@NotNull String title) {
+		attrs.put("sling:title", title);
+		return (T) this;
+	}
 
-    @SuppressWarnings("unchecked")
-    @Override
-    @NotNull
-    public T withRequired(boolean required) {
-        attrs.put("sling:required", required);
-        return (T) this;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	@NotNull
+	public T withRequired(boolean required) {
+		attrs.put("sling:required", required);
+		return (T) this;
+	}
 
-    @SuppressWarnings({ "unchecked" })
-    @Override
-    @NotNull
-    public T withValidations(String... validations) {
-        attrs.put("sling:validations", validations);
-        return (T) this;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings({ "unchecked" })
+	@Override
+	@NotNull
+	public T withValidations(String... validations) {
+		attrs.put("sling:validations", validations);
+		return (T) this;
+	}
 
-    @SuppressWarnings("unchecked")
-    @Override
-    @NotNull
-    public T withMultiple(boolean multiple) {
-        attrs.put("sling:multiple", multiple);
-        return (T) this;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	@NotNull
+	public T withMultiple(boolean multiple) {
+		attrs.put("sling:multiple", multiple);
+		return (T) this;
+	}
 
-    @SuppressWarnings("unchecked")
-    @Override
-    @NotNull
-    public T withReadonly(boolean readonly) {
-        attrs.put("sling:readonly", readonly);
-        return (T) this;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	@NotNull
+	public T withReadonly(boolean readonly) {
+		attrs.put("sling:readonly", readonly);
+		return (T) this;
+	}
 
-    @Override
-    @NotNull
-    public Attributes getAttributes() {
-        return attrs;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@NotNull
+	public Attributes getAttributes() {
+		return attrs;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof Property) {
-            return ((Property) o).getId().equals(getId());
-        } else {
-            return false;
-        }
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Property) {
+			// TODO Finalize the definition of `equals`.
+			return ((Property<?>) o).getId().equals(getId());
+		} else {
+			return false;
+		}
+	}
 
-    @Override
-    public int hashCode() {
-        return getId().hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return getId().hashCode();
+	}
 }

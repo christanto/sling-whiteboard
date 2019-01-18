@@ -23,15 +23,15 @@ import org.apache.sling.types.data.Property;
 import org.apache.sling.types.data.validation.commons.RequiredError;
 import org.jetbrains.annotations.NotNull;
 
-class RequiredErrorImpl implements RequiredError {
+class RequiredErrorImpl<T extends Property<V>, V> implements RequiredError<T, V> {
     @NotNull
-    private Property property;
+    private T property;
 
     @NotNull
     private RequestParameter[] params;
 
     @SuppressWarnings("null")
-    public RequiredErrorImpl(@NotNull Property property, RequestParameter... params) {
+    public RequiredErrorImpl(@NotNull T property, RequestParameter... params) {
         this.property = property;
         this.params = params;
     }
@@ -44,7 +44,7 @@ class RequiredErrorImpl implements RequiredError {
 
     @Override
     @NotNull
-    public Property getProperty() {
+    public T getProperty() {
         return property;
     }
 

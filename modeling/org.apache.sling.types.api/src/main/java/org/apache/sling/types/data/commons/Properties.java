@@ -18,17 +18,51 @@
  */
 package org.apache.sling.types.data.commons;
 
+import org.apache.sling.types.data.Property;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
+/**
+ * The service interface to instantiate properties.
+ *
+ * @since 1.0
+ */
 @ProviderType
 public interface Properties {
 
-    TextProperty text(@NotNull String id, @NotNull String name);
+	/**
+	 * Returns a new instance of {@link TextProperty}.
+	 *
+	 * @param id   the {@link Property#getId()} of the property
+	 * @param name the {@link Property#getName()} of the property
+	 * @return the new instance
+	 */
+	TextProperty text(@NotNull String id, @NotNull String name);
 
-    TextareaProperty textarea(@NotNull String id, @NotNull String name);
+	/**
+	 * Returns a new instance of {@link TextareaProperty}.
+	 *
+	 * @param id   the {@link Property#getId()} of the property
+	 * @param name the {@link Property#getName()} of the property
+	 * @return the new instance
+	 */
+	TextareaProperty textarea(@NotNull String id, @NotNull String name);
 
-    BooleanProperty bool(@NotNull String id, @NotNull String name);
+	/**
+	 * Returns a new instance of {@link BooleanProperty}.
+	 *
+	 * @param id   the {@link Property#getId()} of the property
+	 * @param name the {@link Property#getName()} of the property
+	 * @return the new instance
+	 */
+	BooleanProperty bool(@NotNull String id, @NotNull String name);
 
-    DateProperty date(@NotNull String id, @NotNull String name);
+	/**
+	 * Returns a new instance of {@link DateProperty}.
+	 *
+	 * @param id   the {@link Property#getId()} of the property
+	 * @param name the {@link Property#getName()} of the property
+	 * @return the new instance
+	 */
+	DateProperty date(@NotNull String id, @NotNull String name);
 }

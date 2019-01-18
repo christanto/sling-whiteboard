@@ -23,9 +23,23 @@ import org.apache.sling.types.data.Property;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
+/**
+ * The service interface to instantiate errors.
+ *
+ * @since 1.0
+ */
 @ProviderType
 public interface Errors {
 
-    @NotNull
-    RequiredError required(@NotNull Property property, RequestParameter... params);
+	/**
+	 * Returns a new instance of {@link RequiredError}.
+	 *
+	 * @param          <T> the type of the property
+	 * @param          <V> the type of the value of the property
+	 * @param property the associated property of the error
+	 * @param params   the values that fail the validation process
+	 * @return the new instance of {@link RequiredError}
+	 */
+	@NotNull
+	<T extends Property<V>, V> RequiredError<T, V> required(@NotNull T property, RequestParameter... params);
 }

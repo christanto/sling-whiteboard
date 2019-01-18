@@ -23,15 +23,37 @@ import org.apache.sling.types.data.Property;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ConsumerType;
 
+/**
+ * The error during validation process.
+ *
+ * @param <T> the type of the property
+ * @param <V> the type of the value of the property
+ */
 @ConsumerType
-public interface ValidationError {
+public interface ValidationError<T extends Property<V>, V> {
 
-    @NotNull
-    Property getProperty();
+	/**
+	 * Returns the property associated with this error.
+	 *
+	 * @return the property associated with this error
+	 */
+	@NotNull
+	T getProperty();
 
-    @NotNull
-    RequestParameter[] getRequestParameters();
+	/**
+	 * Returns the new values of the property to set. These values represent the
+	 * values that fail the validation process.
+	 *
+	 * @return the new values of the property to set
+	 */
+	@NotNull
+	RequestParameter[] getRequestParameters();
 
-    @NotNull
-    String getMessage();
+	/**
+	 * Returns the error message.
+	 *
+	 * @return the error message
+	 */
+	@NotNull
+	String getMessage();
 }

@@ -18,9 +18,19 @@
  */
 package org.apache.sling.types.data.validation.commons;
 
+import org.apache.sling.types.data.Property;
 import org.apache.sling.types.data.validation.ValidationError;
 import org.osgi.annotation.versioning.ProviderType;
 
+/**
+ * The error to indicate that the new value of the property is empty while
+ * {@link Property#isRequired()} returns {@code true}.
+ *
+ * @param <T> the type of the property
+ * @param <V> the type of the value of the property
+ *
+ * @since 1.0
+ */
 @ProviderType
-public interface RequiredError extends ValidationError {
+public interface RequiredError<T extends Property<V>, V> extends ValidationError<T, V> {
 }

@@ -32,13 +32,10 @@ import org.apache.sling.types.data.commons.SimplePropertyHandler;
 import org.apache.sling.types.data.spi.PropertyHandler;
 import org.apache.sling.types.data.validation.commons.Errors;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-class BooleanPropertyImpl extends SimpleProperty<BooleanProperty> implements BooleanProperty {
-    @NotNull
-    private static final String TYPE = "sling:boolean";
+class BooleanPropertyImpl extends SimpleProperty<BooleanProperty, Boolean> implements BooleanProperty {
 
     public BooleanPropertyImpl(@NotNull AttributesFactory attrsFactory, @NotNull String id, @NotNull String name) {
         super(attrsFactory, id, name, TYPE);
@@ -62,10 +59,10 @@ class BooleanPropertyImpl extends SimpleProperty<BooleanProperty> implements Boo
     @Component(
         service = PropertyHandler.class,
         property = {
-                PropertyHandler.PROPERTY_TYPE + "=" + TYPE
+                PropertyHandler.PROPERTY_TYPE + "=" + BooleanProperty.TYPE
         }
     )
-    public static class BooleanPropertyHandler extends SimplePropertyHandler<BooleanProperty> {
+    public static class BooleanPropertyHandler extends SimplePropertyHandler<BooleanProperty, Boolean> {
         @Reference
         private Errors errors;
 
@@ -74,9 +71,10 @@ class BooleanPropertyImpl extends SimpleProperty<BooleanProperty> implements Boo
             return errors;
         }
 
-        @Override
-        @Nullable
-        protected Object getValue(@NotNull BooleanProperty property, @NotNull ValueMap vm) throws TypeException {
+        @SuppressWarnings("null")
+		@Override
+        @NotNull
+		protected Boolean[] getValue(@NotNull BooleanProperty property, @NotNull ValueMap vm) throws TypeException {
             Attributes attrs = property.getAttributes();
             String checkedValue = attrs.get("checkedValue", "true");
             String uncheckedValue = attrs.get("uncheckedValue", "false");
@@ -84,20 +82,20 @@ class BooleanPropertyImpl extends SimpleProperty<BooleanProperty> implements Boo
             String value = vm.get(property.getName(), String.class);
 
             if (value == null) {
-                return null;
+            	return new Boolean[0];
             }
             if (checkedValue.equals(value)) {
-                return true;
+                return new Boolean[] { true };
             }
             if (uncheckedValue.equals(value)) {
-                return false;
+            	return new Boolean[] { false };
             }
             throw new TypeException("Mismatched value: " + value);
         }
 
         @Override
-        protected Object[] convertParams(@NotNull BooleanProperty property, RequestParameter... params)
-                throws TypeException {
+		protected Boolean[] convertParams(@NotNull BooleanProperty property, RequestParameter... params)
+				throws TypeException {
             Attributes attrs = property.getAttributes();
             String checkedValue = attrs.get("checkedValue", "true");
             String uncheckedValue = attrs.get("uncheckedValue", "false");

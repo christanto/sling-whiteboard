@@ -20,7 +20,6 @@ package org.apache.sling.types.data.spi;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.sling.api.request.RequestParameter;
 import org.apache.sling.api.resource.Resource;
@@ -31,20 +30,64 @@ import org.apache.sling.types.data.validation.ValidationError;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ConsumerType;
 
+/**
+ * The SPI to be implemented by OSGi services to do property processing based on
+ * the property type.
+ *
+ * @param <T> the type of the property
+ * @param <V> the type of the value of the property
+ *
+ * @since 1.0
+ */
 @ConsumerType
-public interface PropertyHandler<T extends Property> {
+public interface PropertyHandler<T extends Property<V>, V> {
 
+	/**
+	 * The OSGi service property name to indicate the property type
+	 * ({@link Property#getType()}) that this handler is applicable to handle.
+	 */
 	String PROPERTY_TYPE = "sling.type";
 
+	/**
+	 * Returns the value of the given property from the persistence layer.
+	 *
+	 * @param ctx      the context of the processing
+	 * @param property the property to retrieve its value
+	 * @return the array of values. If the property is a single value property,
+	 *         array of one element is returned.
+	 * @throws TypeException when error occurs related to type
+	 */
 	@NotNull
-	Optional<?> getValue(@NotNull Context<Resource> ctx, @NotNull T property) throws TypeException;
+	V[] getValue(@NotNull Context<Resource> ctx, @NotNull T property) throws TypeException;
 
-	void setValue(@NotNull Context<Resource> ctx, @NotNull T property, RequestParameter... params)
-			throws TypeException;
+	/**
+	 * Persists the value of the given property to the persistence layer.
+	 * <p>
+	 * This method is called after successful call to
+	 * {@link #validate(Context, Property, RequestParameter...)}.
+	 * <p>
+	 *
+	 * @param ctx      the context of the processing
+	 * @param property the property to persist its value
+	 * @param params   the new values to persist
+	 * @throws TypeException when error occurs related to type
+	 */
+	void setValue(@NotNull Context<Resource> ctx, @NotNull T property, RequestParameter... params) throws TypeException;
 
+	/**
+	 * Validates the new values of the given property before persisting by calling
+	 * {@link #setValue(Context, Property, RequestParameter...)}.
+	 *
+	 * @param ctx      the context of the processing
+	 * @param property the property to persist its value
+	 * @param params   the new values to persist
+	 * @return the list of errors. Empty list is returned when validation is
+	 *         successful.
+	 * @throws TypeException when error occurs related to type
+	 */
 	@SuppressWarnings("null")
 	@NotNull
-	default List<@NotNull ValidationError> validate(@NotNull Context<Resource> ctx, @NotNull T property,
+	default List<@NotNull ValidationError<T, V>> validate(@NotNull Context<Resource> ctx, @NotNull T property,
 			RequestParameter... params) throws TypeException {
 		return Collections.emptyList();
 	}

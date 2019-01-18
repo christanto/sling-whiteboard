@@ -18,8 +18,20 @@
  */
 package org.apache.sling.types.data.commons;
 
+import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
+/**
+ * The property to represent multiline text.
+ *
+ * @since 1.0
+ */
 @ProviderType
-public interface TextareaProperty extends WritableProperty<TextareaProperty> {
+public interface TextareaProperty extends WritableProperty<TextareaProperty, String> {
+
+	/**
+	 * The property type name.
+	 */
+	@NotNull
+	String TYPE = "sling:textarea";
 }

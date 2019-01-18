@@ -69,7 +69,7 @@ public class DataTypeAdapterFactory implements AdapterFactory {
 
         @SuppressWarnings("null")
         @NotNull
-        List<@NotNull Property> properties = all
+        List<@NotNull Property<?>> properties = all
             .map(bundleContext::getService)
             .map(PropertyProvider::getProperties)
             .flatMap(List::stream)
@@ -78,7 +78,7 @@ public class DataTypeAdapterFactory implements AdapterFactory {
         return (AdapterType) new DataType() {
             @Override
             @NotNull
-            public List<@NotNull Property> getProperties() {
+            public List<@NotNull Property<?>> getProperties() {
                 return properties;
             }
         };

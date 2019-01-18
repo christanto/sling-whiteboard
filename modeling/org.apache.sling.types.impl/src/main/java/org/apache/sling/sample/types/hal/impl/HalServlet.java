@@ -200,9 +200,16 @@ public class HalServlet extends SlingSafeMethodsServlet {
 
         	for (Prop p : entity.getProperties()) {
         		entityService.getProperty(ctx.getAdaptable(), p)
-        			.ifPresent(property -> propertyService.getValue(ctx, property)
-    					.ifPresent(v -> map.put(property.getId(), v))
-					);
+        			.ifPresent(property -> {
+        				Object[] values = propertyService.getValue(ctx, property);
+        				if (values.length > 0) {
+        					if (property.isMultiple()) {
+        						map.put(property.getId(), values);
+        					} else {
+        						map.put(property.getId(), values[0]);
+        					}
+        				}
+        			});
         	}
 
             return map;

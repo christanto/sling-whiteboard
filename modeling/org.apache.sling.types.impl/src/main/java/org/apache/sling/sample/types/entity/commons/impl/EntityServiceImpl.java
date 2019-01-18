@@ -35,7 +35,7 @@ public class EntityServiceImpl implements EntityService {
 	@SuppressWarnings("null")
 	@Override
 	@NotNull
-	public Optional<Property> getProperty(@NotNull Adaptable adaptable, @NotNull Prop prop) throws TypeException {
+	public Optional<Property<?>> getProperty(@NotNull Adaptable adaptable, @NotNull Prop prop) throws TypeException {
 		return Optional.<DataType>ofNullable(adaptable.adaptTo(DataType.class))
 				.flatMap(m -> m.getPropertyById(Optional.of(prop.getBinding())));
 	}

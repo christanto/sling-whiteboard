@@ -49,7 +49,7 @@ public class StreamPropertyProvider implements PropertyProvider {
     @SuppressWarnings("null")
     @Override
     @NotNull
-    public List<@NotNull Property> getProperties() {
+    public List<@NotNull Property<?>> getProperties() {
         return Arrays.asList(
             properties.text("title", "info/title").withTitle("Title"),
             properties.text("description", "info/description").withTitle("Description")

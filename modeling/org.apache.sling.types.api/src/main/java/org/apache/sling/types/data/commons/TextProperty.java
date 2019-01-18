@@ -18,8 +18,20 @@
  */
 package org.apache.sling.types.data.commons;
 
+import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
+/**
+ * The property to represent single line text.
+ *
+ * @since 1.0
+ */
 @ProviderType
-public interface TextProperty extends WritableProperty<TextProperty> {
+public interface TextProperty extends WritableProperty<TextProperty, String> {
+
+	/**
+	 * The property type name.
+	 */
+	@NotNull
+	String TYPE = "sling:text";
 }

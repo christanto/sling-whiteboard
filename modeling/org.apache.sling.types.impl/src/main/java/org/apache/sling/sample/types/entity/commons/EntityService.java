@@ -31,5 +31,5 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface EntityService {
 
 	@NotNull
-	Optional<Property> getProperty(@NotNull Adaptable adaptable, @NotNull Prop prop) throws TypeException;
+	Optional<Property<?>> getProperty(@NotNull Adaptable adaptable, @NotNull Prop prop) throws TypeException;
 }

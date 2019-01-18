@@ -18,8 +18,22 @@
  */
 package org.apache.sling.types.data.commons;
 
+import java.util.Calendar;
+
+import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
+/**
+ * The property to represent date.
+ *
+ * @since 1.0
+ */
 @ProviderType
-public interface DateProperty extends WritableProperty<DateProperty> {
+public interface DateProperty extends WritableProperty<DateProperty, Calendar> {
+
+	/**
+	 * The property type name.
+	 */
+	@NotNull
+	String TYPE = "sling:date";
 }

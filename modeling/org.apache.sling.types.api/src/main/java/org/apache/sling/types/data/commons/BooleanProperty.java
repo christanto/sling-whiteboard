@@ -24,13 +24,45 @@ import org.apache.sling.types.attributes.annotations.Attribute;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
+/**
+ * The property to represent boolean.
+ *
+ * @since 1.0
+ */
 @ProviderType
-public interface BooleanProperty extends WritableProperty<BooleanProperty> {
+public interface BooleanProperty extends WritableProperty<BooleanProperty, Boolean> {
 
-    @Attribute
-    @NotNull
-    Optional<String> getCheckedValue();
+	/**
+	 * The property type name.
+	 */
+	@NotNull
+	String TYPE = "sling:boolean";
 
-    @NotNull
-    BooleanProperty withCheckedValue(@NotNull String checkedValue);
+	/**
+	 * Returns the value to persist to the persistence layer when this property is
+	 * {@code true}.
+	 * <p>
+	 * For example, if this method returns {@code on} and the property value is
+	 * {@code true} then {@code on} will be saved instead of boolean {@code true}.
+	 * </p>
+	 * <p>
+	 * It is a similar mechanic to how <a href=
+	 * "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox">HTML
+	 * checkbox</a> works.
+	 * <p>
+	 *
+	 * @return the string to persist when this property is {@code true}
+	 */
+	@Attribute
+	@NotNull
+	Optional<String> getCheckedValue();
+
+	/**
+	 * The setter of {@link #getCheckedValue()}.
+	 *
+	 * @param checkedValue the string to persist when this property is {@code true}
+	 * @return {@code this} instance for chaining
+	 */
+	@NotNull
+	BooleanProperty withCheckedValue(@NotNull String checkedValue);
 }
