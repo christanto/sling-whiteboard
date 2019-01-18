@@ -18,6 +18,8 @@
  */
 package org.apache.sling.types.data.commons;
 
+import java.util.Objects;
+
 import org.apache.sling.types.attributes.Attributes;
 import org.apache.sling.types.attributes.commons.AttributesFactory;
 import org.apache.sling.types.attributes.commons.WritableAttributes;
@@ -137,6 +139,6 @@ public class SimpleProperty<T extends Property<V>, V> implements WritablePropert
 
 	@Override
 	public int hashCode() {
-		return getId().hashCode();
+		return Objects.hash(getId());
 	}
 }
