@@ -20,23 +20,24 @@ package org.apache.sling.sample.types.entity.commons;
 
 import org.apache.sling.sample.types.entity.Prop;
 import org.apache.sling.types.attributes.Attributes;
+import org.apache.sling.types.attributes.commons.AttributesBuilder;
 import org.apache.sling.types.attributes.commons.AttributesFactory;
-import org.apache.sling.types.attributes.commons.WritableAttributes;
 import org.jetbrains.annotations.NotNull;
 
 public class SimpleProp implements Prop {
 
 	@NotNull
-	protected WritableAttributes<? extends SimpleProp> attrs;
+	protected AttributesBuilder<?, SimpleProp> attrs;
 
+	@SuppressWarnings("unchecked")
 	public SimpleProp(@NotNull AttributesFactory attrsFactory, @NotNull String bind) {
-		attrs = attrsFactory.getWritable(getClass());
+		attrs = (AttributesBuilder<?, SimpleProp>) attrsFactory.getWritable(getClass());
 		attrs.put("sling:bind", bind);
 	}
 
 	@Override
 	@NotNull
 	public Attributes getAttributes() {
-		return attrs;
+		return attrs.build();
 	}
 }

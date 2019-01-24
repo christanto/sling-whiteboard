@@ -23,20 +23,21 @@ import java.util.stream.StreamSupport;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.sample.types.entity.Link;
 import org.apache.sling.types.attributes.Attributes;
+import org.apache.sling.types.attributes.commons.AttributesBuilder;
 import org.apache.sling.types.attributes.commons.AttributesFactory;
-import org.apache.sling.types.attributes.commons.WritableAttributes;
 import org.jetbrains.annotations.NotNull;
 
 public class ItemsLink implements Link {
 
 	@NotNull
-	protected WritableAttributes<? extends ItemsLink> attrs;
+	protected AttributesBuilder<?, ItemsLink> attrs;
 
 	@NotNull
 	private String resourceType;
 
+	@SuppressWarnings("unchecked")
 	public ItemsLink(@NotNull AttributesFactory attrsFactory, @NotNull String rel, @NotNull String resourceType) {
-		attrs = attrsFactory.getWritable(getClass());
+		attrs = (AttributesBuilder<?, ItemsLink>) attrsFactory.getWritable(getClass());
 		attrs.put("rel", rel);
 
 		this.resourceType = resourceType;
@@ -45,7 +46,7 @@ public class ItemsLink implements Link {
 	@Override
 	@NotNull
 	public Attributes getAttributes() {
-		return attrs;
+		return attrs.build();
 	}
 
 	@SuppressWarnings("null")

@@ -19,17 +19,17 @@
 package org.apache.sling.types.attributes.commons.impl;
 
 import org.apache.sling.types.attributes.AttributesProvider;
+import org.apache.sling.types.attributes.commons.AttributesBuilder;
 import org.apache.sling.types.attributes.commons.AttributesFactory;
-import org.apache.sling.types.attributes.commons.WritableAttributes;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.service.component.annotations.Component;
 
 @Component
 public class AttributesFactoryImpl implements AttributesFactory {
 
-    @Override
-    @NotNull
-    public <T extends AttributesProvider> WritableAttributes<T> getWritable(@NotNull Class<T> annotationSource) {
-        return new SimpleAttributes<>(annotationSource);
-    }
+	@Override
+	@NotNull
+	public <P extends AttributesProvider> AttributesBuilder<?, P> getWritable(@NotNull Class<P> annotationSource) {
+		return new SimpleAttributesBuilder<P>(annotationSource);
+	}
 }

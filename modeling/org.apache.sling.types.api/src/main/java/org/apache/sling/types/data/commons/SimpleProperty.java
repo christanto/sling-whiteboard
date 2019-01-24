@@ -21,8 +21,8 @@ package org.apache.sling.types.data.commons;
 import java.util.Objects;
 
 import org.apache.sling.types.attributes.Attributes;
+import org.apache.sling.types.attributes.commons.AttributesBuilder;
 import org.apache.sling.types.attributes.commons.AttributesFactory;
-import org.apache.sling.types.attributes.commons.WritableAttributes;
 import org.apache.sling.types.data.Property;
 import org.jetbrains.annotations.NotNull;
 
@@ -34,7 +34,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @since 1.0
  */
-public class SimpleProperty<T extends Property<V>, V> implements WritableProperty<T, V> {
+public abstract class SimpleProperty<T extends Property<V>, V> implements WritableProperty<T, V> {
 
 	/**
 	 * The attributes of this property.
@@ -42,9 +42,7 @@ public class SimpleProperty<T extends Property<V>, V> implements WritablePropert
 	 * All the attributes are stored here.
 	 * </p>
 	 */
-	@SuppressWarnings("rawtypes")
-	@NotNull
-	protected WritableAttributes<? extends SimpleProperty> attrs;
+	protected AttributesBuilder<?, T> attrs;
 
 	/**
 	 * Instantiates a new property.
@@ -54,9 +52,10 @@ public class SimpleProperty<T extends Property<V>, V> implements WritablePropert
 	 * @param name         the {@link Property#getName()}
 	 * @param type         the {@link Property#getType()}
 	 */
+	@SuppressWarnings("unchecked")
 	public SimpleProperty(@NotNull AttributesFactory attrsFactory, @NotNull String id, @NotNull String name,
 			@NotNull String type) {
-		this.attrs = attrsFactory.getWritable(getClass());
+		attrs = (AttributesBuilder<?, T>) attrsFactory.getWritable(getClass());
 
 		attrs.put("sling:id", id);
 		attrs.put("sling:name", name);
@@ -124,7 +123,7 @@ public class SimpleProperty<T extends Property<V>, V> implements WritablePropert
 	@Override
 	@NotNull
 	public Attributes getAttributes() {
-		return attrs;
+		return attrs.build();
 	}
 
 	@Override

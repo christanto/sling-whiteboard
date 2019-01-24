@@ -25,14 +25,15 @@ import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * The writtable version of {@link Attributes}.
+ * The builder of {@link Attributes}.
  *
- * @param <T> the type of the attribute provider
+ * @param <T> the type of the attributes builder
+ * @param <P> the type of the attributes provider
  *
  * @since 1.0
  */
 @ProviderType
-public interface WritableAttributes<T extends AttributesProvider> extends Attributes {
+public interface AttributesBuilder<T extends AttributesBuilder<T, P>, P extends AttributesProvider> {
 
 	/**
 	 * Sets the value for the attribute of the given name.
@@ -41,5 +42,8 @@ public interface WritableAttributes<T extends AttributesProvider> extends Attrib
 	 * @param value the value of the attribute
 	 * @return this instance for method chaining
 	 */
-	WritableAttributes<T> put(@NotNull String name, @Nullable Object value);
+	T put(@NotNull String name, @Nullable Object value);
+
+	@NotNull
+	Attributes build();
 }

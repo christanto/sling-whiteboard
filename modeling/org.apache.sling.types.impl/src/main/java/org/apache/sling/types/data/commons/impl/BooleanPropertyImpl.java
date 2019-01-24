@@ -45,7 +45,7 @@ class BooleanPropertyImpl extends SimpleProperty<BooleanProperty, Boolean> imple
     @Override
     @NotNull
     public Optional<String> getCheckedValue() {
-        String value = attrs.get("checkedValue", String.class);
+        String value = getAttributes().get("checkedValue", String.class);
         return Optional.ofNullable(value);
     }
 

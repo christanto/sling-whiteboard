@@ -21,20 +21,21 @@ package org.apache.sling.sample.types.entity.commons;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.sample.types.entity.Link;
 import org.apache.sling.types.attributes.Attributes;
+import org.apache.sling.types.attributes.commons.AttributesBuilder;
 import org.apache.sling.types.attributes.commons.AttributesFactory;
-import org.apache.sling.types.attributes.commons.WritableAttributes;
 import org.jetbrains.annotations.NotNull;
 
 public class RelPathLink implements Link {
 
 	@NotNull
-	protected WritableAttributes<? extends RelPathLink> attrs;
+	protected AttributesBuilder<?, RelPathLink> attrs;
 
 	@NotNull
 	private Href href;
 
+	@SuppressWarnings("unchecked")
 	public RelPathLink(@NotNull AttributesFactory attrsFactory, @NotNull String rel, @NotNull String relPath) {
-		attrs = attrsFactory.getWritable(getClass());
+		attrs = (AttributesBuilder<?, RelPathLink>) attrsFactory.getWritable(getClass());
 		attrs.put("rel", rel);
 
 		href = new Href() {
@@ -53,7 +54,7 @@ public class RelPathLink implements Link {
 	@Override
 	@NotNull
 	public Attributes getAttributes() {
-		return attrs;
+		return attrs.build();
 	}
 
 	@SuppressWarnings("null")
