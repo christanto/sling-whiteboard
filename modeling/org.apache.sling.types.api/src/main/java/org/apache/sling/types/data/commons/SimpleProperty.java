@@ -18,8 +18,6 @@
  */
 package org.apache.sling.types.data.commons;
 
-import java.util.Objects;
-
 import org.apache.sling.types.attributes.Attributes;
 import org.apache.sling.types.attributes.commons.AttributesBuilder;
 import org.apache.sling.types.attributes.commons.AttributesFactory;
@@ -70,21 +68,6 @@ public abstract class SimpleProperty<B extends PropertyBuilder<B, P, V>, P exten
 	@NotNull
 	public Attributes getAttributes() {
 		return attrs.build();
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (o instanceof Property) {
-			// TODO Finalize the definition of `equals`.
-			return ((Property<?>) o).getId().equals(getId());
-		} else {
-			return false;
-		}
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(getId());
 	}
 
 	/**

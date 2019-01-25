@@ -154,17 +154,4 @@ public interface Property<V> extends AttributesProvider {
 	default String[] getValidations() {
 		return getAttributes().get("sling:validations", new String[0]);
 	}
-
-	/**
-	 * This property is equal to other property if both:
-	 * <ol>
-	 * <li>share the same {@link #getId()}</li>
-	 * <li>within the same {@link DataType} instance</li>
-	 * </ol>
-	 */
-	@Override
-	boolean equals(Object o);
-
-	@Override
-	int hashCode();
 }
