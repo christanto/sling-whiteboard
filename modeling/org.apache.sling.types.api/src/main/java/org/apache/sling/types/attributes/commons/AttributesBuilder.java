@@ -40,6 +40,11 @@ public interface AttributesBuilder {
 	 */
 	AttributesBuilder put(@NotNull String name, @Nullable Object value);
 
+	/**
+	 * Builds the attributes.
+	 *
+	 * @return the attributes
+	 */
 	@NotNull
 	Attributes build();
 }

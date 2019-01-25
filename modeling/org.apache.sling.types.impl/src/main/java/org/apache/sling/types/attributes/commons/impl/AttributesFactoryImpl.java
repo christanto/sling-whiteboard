@@ -30,6 +30,6 @@ public class AttributesFactoryImpl implements AttributesFactory {
 	@Override
 	@NotNull
 	public AttributesBuilder builder(@NotNull Class<? extends AttributesProvider> annotationSource) {
-		return new SimpleAttributesBuilder<>(annotationSource);
+		return new SimpleAttributes<>(annotationSource);
 	}
 }
