@@ -55,7 +55,7 @@ public abstract class SimpleProperty<T extends Property<V>, V> implements Writab
 	@SuppressWarnings("unchecked")
 	public SimpleProperty(@NotNull AttributesFactory attrsFactory, @NotNull String id, @NotNull String name,
 			@NotNull String type) {
-		attrs = (AttributesBuilder<?, T>) attrsFactory.getWritable(getClass());
+		attrs = (AttributesBuilder<?, T>) attrsFactory.builder(getClass());
 
 		attrs.put("sling:id", id);
 		attrs.put("sling:name", name);

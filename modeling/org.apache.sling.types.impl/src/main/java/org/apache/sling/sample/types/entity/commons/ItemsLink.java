@@ -30,14 +30,13 @@ import org.jetbrains.annotations.NotNull;
 public class ItemsLink implements Link {
 
 	@NotNull
-	protected AttributesBuilder<?, ItemsLink> attrs;
+	protected AttributesBuilder<?, ? extends ItemsLink> attrs;
 
 	@NotNull
 	private String resourceType;
 
-	@SuppressWarnings("unchecked")
 	public ItemsLink(@NotNull AttributesFactory attrsFactory, @NotNull String rel, @NotNull String resourceType) {
-		attrs = (AttributesBuilder<?, ItemsLink>) attrsFactory.getWritable(getClass());
+		attrs = attrsFactory.builder(getClass());
 		attrs.put("rel", rel);
 
 		this.resourceType = resourceType;

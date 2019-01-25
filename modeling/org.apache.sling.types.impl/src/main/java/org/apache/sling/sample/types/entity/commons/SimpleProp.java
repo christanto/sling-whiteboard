@@ -27,11 +27,10 @@ import org.jetbrains.annotations.NotNull;
 public class SimpleProp implements Prop {
 
 	@NotNull
-	protected AttributesBuilder<?, SimpleProp> attrs;
+	protected AttributesBuilder<?, ? extends SimpleProp> attrs;
 
-	@SuppressWarnings("unchecked")
 	public SimpleProp(@NotNull AttributesFactory attrsFactory, @NotNull String bind) {
-		attrs = (AttributesBuilder<?, SimpleProp>) attrsFactory.getWritable(getClass());
+		attrs = attrsFactory.builder(getClass());
 		attrs.put("sling:bind", bind);
 	}
 

@@ -34,9 +34,10 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface AttributesFactory {
 
 	/**
-	 * Returns a new instance of {@link AttributesBuilder}. Its
-	 * {@link AttributeDefinitions} is automatically generated based on the
-	 * {@link Attribute} annotations defined in the given annotationSource.
+	 * Returns a new instance of {@link AttributesBuilder}. The
+	 * {@link AttributeDefinitions} of the resulting {@link Attributes} is
+	 * automatically generated based on the {@link Attribute} annotations defined in
+	 * the given annotationSource.
 	 *
 	 * @param                  <P> the type of the attribute provider
 	 * @param annotationSource the source of the annotations to generate the
@@ -44,5 +45,5 @@ public interface AttributesFactory {
 	 * @return a new {@link AttributesBuilder} instance
 	 */
 	@NotNull
-	<P extends AttributesProvider> AttributesBuilder<?, P> getWritable(@NotNull Class<P> annotationSource);
+	<P extends AttributesProvider> AttributesBuilder<?, P> builder(@NotNull Class<P> annotationSource);
 }

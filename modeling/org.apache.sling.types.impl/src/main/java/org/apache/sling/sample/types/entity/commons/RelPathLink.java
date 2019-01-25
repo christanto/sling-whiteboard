@@ -28,14 +28,13 @@ import org.jetbrains.annotations.NotNull;
 public class RelPathLink implements Link {
 
 	@NotNull
-	protected AttributesBuilder<?, RelPathLink> attrs;
+	protected AttributesBuilder<?, ? extends RelPathLink> attrs;
 
 	@NotNull
 	private Href href;
 
-	@SuppressWarnings("unchecked")
 	public RelPathLink(@NotNull AttributesFactory attrsFactory, @NotNull String rel, @NotNull String relPath) {
-		attrs = (AttributesBuilder<?, RelPathLink>) attrsFactory.getWritable(getClass());
+		attrs = attrsFactory.builder(getClass());
 		attrs.put("rel", rel);
 
 		href = new Href() {
