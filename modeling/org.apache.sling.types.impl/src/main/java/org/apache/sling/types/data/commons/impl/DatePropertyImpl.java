@@ -27,6 +27,7 @@ import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.types.TypeException;
 import org.apache.sling.types.attributes.commons.AttributesFactory;
 import org.apache.sling.types.data.commons.DateProperty;
+import org.apache.sling.types.data.commons.DateProperty.Builder;
 import org.apache.sling.types.data.commons.SimpleProperty;
 import org.apache.sling.types.data.commons.SimplePropertyHandler;
 import org.apache.sling.types.data.spi.PropertyHandler;
@@ -35,7 +36,7 @@ import org.jetbrains.annotations.NotNull;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-class DatePropertyImpl extends SimpleProperty<DateProperty, Calendar> implements DateProperty {
+class DatePropertyImpl extends SimpleProperty<Builder, DateProperty, Calendar> implements DateProperty, Builder {
 
     public DatePropertyImpl(@NotNull AttributesFactory attrsFactory, @NotNull String id, @NotNull String name) {
         super(attrsFactory, id, name, TYPE);
@@ -43,7 +44,13 @@ class DatePropertyImpl extends SimpleProperty<DateProperty, Calendar> implements
 
     @Override
 	@NotNull
-	protected DateProperty getSelf() {
+	public DateProperty build() {
+		return this;
+	}
+
+    @Override
+	@NotNull
+	protected Builder getSelf() {
 		return this;
 	}
 

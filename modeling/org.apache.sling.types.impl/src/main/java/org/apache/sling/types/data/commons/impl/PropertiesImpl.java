@@ -36,25 +36,25 @@ public class PropertiesImpl implements Properties {
 
     @SuppressWarnings("null")
     @Override
-    public TextProperty text(@NotNull String id, @NotNull String name) {
+    public TextProperty.Builder text(@NotNull String id, @NotNull String name) {
         return new TextPropertyImpl(factory, id, name);
     }
 
     @SuppressWarnings("null")
     @Override
-    public TextareaProperty textarea(@NotNull String id, @NotNull String name) {
+    public TextareaProperty.Builder textarea(@NotNull String id, @NotNull String name) {
         return new TextareaPropertyImpl(factory, id, name);
     }
 
     @SuppressWarnings("null")
     @Override
-    public BooleanProperty bool(@NotNull String id, @NotNull String name) {
+    public BooleanProperty.Builder bool(@NotNull String id, @NotNull String name) {
         return new BooleanPropertyImpl(factory, id, name);
     }
 
     @SuppressWarnings("null")
     @Override
-    public DateProperty date(@NotNull String id, @NotNull String name) {
+    public DateProperty.Builder date(@NotNull String id, @NotNull String name) {
         return new DatePropertyImpl(factory, id, name);
     }
 }

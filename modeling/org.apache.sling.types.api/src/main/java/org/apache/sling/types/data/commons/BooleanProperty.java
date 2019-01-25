@@ -21,6 +21,7 @@ package org.apache.sling.types.data.commons;
 import java.util.Optional;
 
 import org.apache.sling.types.attributes.annotations.Attribute;
+import org.apache.sling.types.data.Property;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -30,7 +31,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @since 1.0
  */
 @ProviderType
-public interface BooleanProperty extends WritableProperty<BooleanProperty, Boolean> {
+public interface BooleanProperty extends Property<Boolean> {
 
 	/**
 	 * The property type name.
@@ -53,16 +54,54 @@ public interface BooleanProperty extends WritableProperty<BooleanProperty, Boole
 	 *
 	 * @return the string to persist when this property is {@code true}
 	 */
+	@SuppressWarnings("null")
 	@Attribute
 	@NotNull
-	Optional<String> getCheckedValue();
+	default Optional<String> getCheckedValue() {
+		String value = getAttributes().get("checkedValue", String.class);
+        return Optional.ofNullable(value);
+	}
 
 	/**
-	 * The setter of {@link #getCheckedValue()}.
+	 * Returns the value to persist to the persistence layer when this property is
+	 * {@code false}.
+	 * <p>
+	 * For example, if this method returns {@code off} and the property value is
+	 * {@code false} then {@code off} will be saved instead of boolean
+	 * {@code false}.
+	 * </p>
 	 *
-	 * @param checkedValue the string to persist when this property is {@code true}
-	 * @return {@code this} instance for chaining
+	 * @return the string to persist when this property is {@code false}
 	 */
+	@SuppressWarnings("null")
+	@Attribute
 	@NotNull
-	BooleanProperty withCheckedValue(@NotNull String checkedValue);
+	default Optional<String> getUncheckedValue() {
+		String value = getAttributes().get("uncheckedValue", String.class);
+		return Optional.ofNullable(value);
+	}
+
+	/**
+	 * The builder of {@link BooleanProperty}.
+	 */
+	interface Builder extends PropertyBuilder<Builder, BooleanProperty, Boolean> {
+
+		/**
+		 * The setter of {@link #getCheckedValue()}.
+		 *
+		 * @param checkedValue the string to persist when this property is {@code true}
+		 * @return {@code this} instance for chaining
+		 */
+		@NotNull
+		Builder withCheckedValue(@NotNull String checkedValue);
+
+		/**
+		 * The setter of {@link #getUncheckedValue()}.
+		 *
+		 * @param uncheckedValue the string to persist when this property is {@code false}
+		 * @return {@code this} instance for chaining
+		 */
+		@NotNull
+		Builder withUncheckedValue(@NotNull String uncheckedValue);
+	}
 }

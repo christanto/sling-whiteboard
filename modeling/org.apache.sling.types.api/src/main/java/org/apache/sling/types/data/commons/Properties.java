@@ -31,38 +31,38 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface Properties {
 
 	/**
-	 * Returns a new instance of {@link TextProperty}.
+	 * Returns a new builder of {@link TextProperty}.
 	 *
 	 * @param id   the {@link Property#getId()} of the property
 	 * @param name the {@link Property#getName()} of the property
 	 * @return the new instance
 	 */
-	TextProperty text(@NotNull String id, @NotNull String name);
+	TextProperty.Builder text(@NotNull String id, @NotNull String name);
 
 	/**
-	 * Returns a new instance of {@link TextareaProperty}.
+	 * Returns a new builder of {@link TextareaProperty}.
 	 *
 	 * @param id   the {@link Property#getId()} of the property
 	 * @param name the {@link Property#getName()} of the property
 	 * @return the new instance
 	 */
-	TextareaProperty textarea(@NotNull String id, @NotNull String name);
+	TextareaProperty.Builder textarea(@NotNull String id, @NotNull String name);
 
 	/**
-	 * Returns a new instance of {@link BooleanProperty}.
+	 * Returns a new builder of {@link BooleanProperty}.
 	 *
 	 * @param id   the {@link Property#getId()} of the property
 	 * @param name the {@link Property#getName()} of the property
 	 * @return the new instance
 	 */
-	BooleanProperty bool(@NotNull String id, @NotNull String name);
+	BooleanProperty.Builder bool(@NotNull String id, @NotNull String name);
 
 	/**
-	 * Returns a new instance of {@link DateProperty}.
+	 * Returns a new builder of {@link DateProperty}.
 	 *
 	 * @param id   the {@link Property#getId()} of the property
 	 * @param name the {@link Property#getName()} of the property
 	 * @return the new instance
 	 */
-	DateProperty date(@NotNull String id, @NotNull String name);
+	DateProperty.Builder date(@NotNull String id, @NotNull String name);
 }

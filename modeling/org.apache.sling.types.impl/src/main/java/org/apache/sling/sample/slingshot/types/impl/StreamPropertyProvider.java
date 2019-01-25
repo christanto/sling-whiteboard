@@ -51,8 +51,8 @@ public class StreamPropertyProvider implements PropertyProvider {
     @NotNull
     public List<@NotNull Property<?>> getProperties() {
         return Arrays.asList(
-            properties.text("title", "info/title").withTitle("Title"),
-            properties.text("description", "info/description").withTitle("Description")
+            properties.text("title", "info/title").withTitle("Title").build(),
+            properties.text("description", "info/description").withTitle("Description").build()
         );
     }
 }

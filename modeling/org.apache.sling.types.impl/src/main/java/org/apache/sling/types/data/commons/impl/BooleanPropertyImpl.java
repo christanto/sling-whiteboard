@@ -19,14 +19,13 @@
 package org.apache.sling.types.data.commons.impl;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 import org.apache.sling.api.request.RequestParameter;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.types.TypeException;
-import org.apache.sling.types.attributes.Attributes;
 import org.apache.sling.types.attributes.commons.AttributesFactory;
 import org.apache.sling.types.data.commons.BooleanProperty;
+import org.apache.sling.types.data.commons.BooleanProperty.Builder;
 import org.apache.sling.types.data.commons.SimpleProperty;
 import org.apache.sling.types.data.commons.SimplePropertyHandler;
 import org.apache.sling.types.data.spi.PropertyHandler;
@@ -35,37 +34,42 @@ import org.jetbrains.annotations.NotNull;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-class BooleanPropertyImpl extends SimpleProperty<BooleanProperty, Boolean> implements BooleanProperty {
+class BooleanPropertyImpl extends SimpleProperty<Builder, BooleanProperty, Boolean> implements BooleanProperty, Builder {
 
     public BooleanPropertyImpl(@NotNull AttributesFactory attrsFactory, @NotNull String id, @NotNull String name) {
         super(attrsFactory, id, name, TYPE);
     }
 
-    @SuppressWarnings("null")
     @Override
     @NotNull
-    public Optional<String> getCheckedValue() {
-        String value = getAttributes().get("checkedValue", String.class);
-        return Optional.ofNullable(value);
-    }
-
-    @Override
-    @NotNull
-    public BooleanProperty withCheckedValue(@NotNull String checkedValue) {
+    public Builder withCheckedValue(@NotNull String checkedValue) {
         attrs.put("checkedValue", checkedValue);
         return this;
     }
 
     @Override
 	@NotNull
-	protected BooleanProperty getSelf() {
+	public Builder withUncheckedValue(@NotNull String uncheckedValue) {
+    	attrs.put("uncheckedValue", uncheckedValue);
+    	return this;
+	}
+
+	@Override
+	@NotNull
+	public BooleanProperty build() {
+		return this;
+	}
+
+	@Override
+	@NotNull
+	protected Builder getSelf() {
 		return this;
 	}
 
     @Component(
         service = PropertyHandler.class,
         property = {
-                PropertyHandler.PROPERTY_TYPE + "=" + BooleanProperty.TYPE
+            PropertyHandler.PROPERTY_TYPE + "=" + BooleanProperty.TYPE
         }
     )
     public static class BooleanPropertyHandler extends SimplePropertyHandler<BooleanProperty, Boolean> {
@@ -81,9 +85,8 @@ class BooleanPropertyImpl extends SimpleProperty<BooleanProperty, Boolean> imple
 		@Override
         @NotNull
 		protected Boolean[] getValue(@NotNull BooleanProperty property, @NotNull ValueMap vm) throws TypeException {
-            Attributes attrs = property.getAttributes();
-            String checkedValue = attrs.get("checkedValue", "true");
-            String uncheckedValue = attrs.get("uncheckedValue", "false");
+        	String checkedValue = property.getCheckedValue().orElse("true");
+            String uncheckedValue = property.getUncheckedValue().orElse("false");
 
             String value = vm.get(property.getName(), String.class);
 
@@ -102,9 +105,8 @@ class BooleanPropertyImpl extends SimpleProperty<BooleanProperty, Boolean> imple
         @Override
 		protected Boolean[] convertParams(@NotNull BooleanProperty property, RequestParameter... params)
 				throws TypeException {
-            Attributes attrs = property.getAttributes();
-            String checkedValue = attrs.get("checkedValue", "true");
-            String uncheckedValue = attrs.get("uncheckedValue", "false");
+            String checkedValue = property.getCheckedValue().orElse("true");
+            String uncheckedValue = property.getUncheckedValue().orElse("false");
 
             return Arrays.stream(params)
                 .map(RequestParameter::getString)

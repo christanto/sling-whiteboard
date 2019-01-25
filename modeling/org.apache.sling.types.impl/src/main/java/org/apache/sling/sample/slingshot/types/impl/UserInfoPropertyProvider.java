@@ -52,8 +52,8 @@ public class UserInfoPropertyProvider implements PropertyProvider {
     @NotNull
     public List<@NotNull Property<?>> getProperties() {
         return Arrays.asList(
-            properties.text("name", "name").withTitle("Name"),
-            properties.text("about", "about").withTitle("About Me")
+            properties.text("name", "name").withTitle("Name").build(),
+            properties.text("about", "about").withTitle("About Me").build()
         );
     }
 }

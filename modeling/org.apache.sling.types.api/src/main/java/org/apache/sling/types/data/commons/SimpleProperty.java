@@ -29,12 +29,14 @@ import org.jetbrains.annotations.NotNull;
 /**
  * The base class to implement {@link Property}.
  *
- * @param <T> the type of the property
+ * @param <B> the type of the property builder
+ * @param <P> the type of the property
  * @param <V> the type of the value of the property
  *
  * @since 1.0
  */
-public abstract class SimpleProperty<T extends Property<V>, V> implements WritableProperty<T, V> {
+public abstract class SimpleProperty<B extends PropertyBuilder<B, P, V>, P extends Property<V>, V>
+		implements Property<V>, PropertyBuilder<B, P, V> {
 
 	/**
 	 * The attributes of this property.
@@ -66,67 +68,9 @@ public abstract class SimpleProperty<T extends Property<V>, V> implements Writab
 	 */
 	@Override
 	@NotNull
-	public T withTitle(@NotNull String title) {
-		attrs.put("sling:title", title);
-		return getSelf();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@NotNull
-	public T withRequired(boolean required) {
-		attrs.put("sling:required", required);
-		return getSelf();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@NotNull
-	public T withValidations(String... validations) {
-		attrs.put("sling:validations", validations);
-		return getSelf();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@NotNull
-	public T withMultiple(boolean multiple) {
-		attrs.put("sling:multiple", multiple);
-		return getSelf();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@NotNull
-	public T withReadonly(boolean readonly) {
-		attrs.put("sling:readonly", readonly);
-		return getSelf();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@NotNull
 	public Attributes getAttributes() {
 		return attrs.build();
 	}
-
-	/**
-	 * Returns {@code this} instance.
-	 *
-	 * @return {@code this} instance
-	 */
-	@NotNull
-	protected abstract T getSelf();
 
 	@Override
 	public boolean equals(Object o) {
@@ -142,4 +86,62 @@ public abstract class SimpleProperty<T extends Property<V>, V> implements Writab
 	public int hashCode() {
 		return Objects.hash(getId());
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@NotNull
+	public B withTitle(@NotNull String title) {
+		attrs.put("sling:title", title);
+		return getSelf();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@NotNull
+	public B withRequired(boolean required) {
+		attrs.put("sling:required", required);
+		return getSelf();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@NotNull
+	public B withValidations(String... validations) {
+		attrs.put("sling:validations", validations);
+		return getSelf();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@NotNull
+	public B withMultiple(boolean multiple) {
+		attrs.put("sling:multiple", multiple);
+		return getSelf();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@NotNull
+	public B withReadonly(boolean readonly) {
+		attrs.put("sling:readonly", readonly);
+		return getSelf();
+	}
+
+	/**
+	 * Returns {@code this} instance.
+	 *
+	 * @return {@code this} instance
+	 */
+	@NotNull
+	protected abstract B getSelf();
 }

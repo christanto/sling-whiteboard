@@ -18,6 +18,7 @@
  */
 package org.apache.sling.types.data.commons;
 
+import org.apache.sling.types.data.Property;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -27,11 +28,17 @@ import org.osgi.annotation.versioning.ProviderType;
  * @since 1.0
  */
 @ProviderType
-public interface TextProperty extends WritableProperty<TextProperty, String> {
+public interface TextProperty extends Property<String> {
 
 	/**
 	 * The property type name.
 	 */
 	@NotNull
 	String TYPE = "sling:text";
+
+	/**
+	 * The builder of {@link TextProperty}.
+	 */
+	interface Builder extends PropertyBuilder<Builder, TextProperty, String> {
+	}
 }
