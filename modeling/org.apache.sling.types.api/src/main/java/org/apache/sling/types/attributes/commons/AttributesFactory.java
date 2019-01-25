@@ -39,11 +39,10 @@ public interface AttributesFactory {
 	 * automatically generated based on the {@link Attribute} annotations defined in
 	 * the given annotationSource.
 	 *
-	 * @param                  <P> the type of the attribute provider
 	 * @param annotationSource the source of the annotations to generate the
 	 *                         attribute definitions from
 	 * @return a new {@link AttributesBuilder} instance
 	 */
 	@NotNull
-	<P extends AttributesProvider> AttributesBuilder<?, P> builder(@NotNull Class<P> annotationSource);
+	AttributesBuilder builder(@NotNull Class<? extends AttributesProvider> annotationSource);
 }

@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 public class SimpleProp implements Prop {
 
 	@NotNull
-	protected AttributesBuilder<?, ? extends SimpleProp> attrs;
+	protected AttributesBuilder attrs;
 
 	public SimpleProp(@NotNull AttributesFactory attrsFactory, @NotNull String bind) {
 		attrs = attrsFactory.builder(getClass());

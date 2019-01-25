@@ -47,8 +47,7 @@ import org.apache.sling.types.attributes.commons.AttributesBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-class SimpleAttributesBuilder<P extends AttributesProvider>
-		implements AttributesBuilder<SimpleAttributesBuilder<P>, P> {
+class SimpleAttributesBuilder<P extends AttributesProvider> implements AttributesBuilder {
 
 	@NotNull
 	private final SimpleAttributes<P> attrs;
@@ -58,7 +57,7 @@ class SimpleAttributesBuilder<P extends AttributesProvider>
 	}
 
 	@Override
-	public SimpleAttributesBuilder<P> put(@NotNull String name, @Nullable Object value) {
+	public AttributesBuilder put(@NotNull String name, @Nullable Object value) {
 		attrs.vm.put(name, value);
 		return this;
 	}

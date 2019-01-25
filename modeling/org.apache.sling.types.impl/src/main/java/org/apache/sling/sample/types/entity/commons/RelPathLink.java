@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
 public class RelPathLink implements Link {
 
 	@NotNull
-	protected AttributesBuilder<?, ? extends RelPathLink> attrs;
+	protected AttributesBuilder attrs;
 
 	@NotNull
 	private Href href;

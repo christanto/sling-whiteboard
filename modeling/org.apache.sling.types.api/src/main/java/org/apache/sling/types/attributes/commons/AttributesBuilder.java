@@ -19,7 +19,6 @@
 package org.apache.sling.types.attributes.commons;
 
 import org.apache.sling.types.attributes.Attributes;
-import org.apache.sling.types.attributes.AttributesProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ProviderType;
@@ -27,13 +26,10 @@ import org.osgi.annotation.versioning.ProviderType;
 /**
  * The builder of {@link Attributes}.
  *
- * @param <T> the type of the attributes builder
- * @param <P> the type of the attributes provider
- *
  * @since 1.0
  */
 @ProviderType
-public interface AttributesBuilder<T extends AttributesBuilder<T, P>, P extends AttributesProvider> {
+public interface AttributesBuilder {
 
 	/**
 	 * Sets the value for the attribute of the given name.
@@ -42,7 +38,7 @@ public interface AttributesBuilder<T extends AttributesBuilder<T, P>, P extends 
 	 * @param value the value of the attribute
 	 * @return this instance for method chaining
 	 */
-	T put(@NotNull String name, @Nullable Object value);
+	AttributesBuilder put(@NotNull String name, @Nullable Object value);
 
 	@NotNull
 	Attributes build();

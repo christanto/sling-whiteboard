@@ -29,7 +29,7 @@ public class AttributesFactoryImpl implements AttributesFactory {
 
 	@Override
 	@NotNull
-	public <P extends AttributesProvider> AttributesBuilder<?, P> builder(@NotNull Class<P> annotationSource) {
-		return new SimpleAttributesBuilder<P>(annotationSource);
+	public AttributesBuilder builder(@NotNull Class<? extends AttributesProvider> annotationSource) {
+		return new SimpleAttributesBuilder<>(annotationSource);
 	}
 }

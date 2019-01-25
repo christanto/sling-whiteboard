@@ -42,7 +42,7 @@ public abstract class SimpleProperty<T extends Property<V>, V> implements Writab
 	 * All the attributes are stored here.
 	 * </p>
 	 */
-	protected AttributesBuilder<?, T> attrs;
+	protected AttributesBuilder attrs;
 
 	/**
 	 * Instantiates a new property.
@@ -52,10 +52,9 @@ public abstract class SimpleProperty<T extends Property<V>, V> implements Writab
 	 * @param name         the {@link Property#getName()}
 	 * @param type         the {@link Property#getType()}
 	 */
-	@SuppressWarnings("unchecked")
 	public SimpleProperty(@NotNull AttributesFactory attrsFactory, @NotNull String id, @NotNull String name,
 			@NotNull String type) {
-		attrs = (AttributesBuilder<?, T>) attrsFactory.builder(getClass());
+		attrs = attrsFactory.builder(getClass());
 
 		attrs.put("sling:id", id);
 		attrs.put("sling:name", name);

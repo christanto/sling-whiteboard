@@ -30,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
 public class ItemsLink implements Link {
 
 	@NotNull
-	protected AttributesBuilder<?, ? extends ItemsLink> attrs;
+	protected AttributesBuilder attrs;
 
 	@NotNull
 	private String resourceType;
