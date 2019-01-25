@@ -56,6 +56,12 @@ class BooleanPropertyImpl extends SimpleProperty<BooleanProperty, Boolean> imple
         return this;
     }
 
+    @Override
+	@NotNull
+	protected BooleanProperty getSelf() {
+		return this;
+	}
+
     @Component(
         service = PropertyHandler.class,
         property = {

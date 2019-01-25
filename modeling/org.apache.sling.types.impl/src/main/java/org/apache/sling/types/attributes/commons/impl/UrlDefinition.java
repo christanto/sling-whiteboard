@@ -62,6 +62,12 @@ class UrlDefinition extends SimpleDefinition<UrlDefinition, String> {
         return this;
     }
 
+    @Override
+	@NotNull
+	protected UrlDefinition getSelf() {
+		return this;
+	}
+
     @Component(
         service = AttributeHandler.class,
         property = {

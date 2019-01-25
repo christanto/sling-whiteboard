@@ -39,6 +39,12 @@ class TextareaPropertyImpl extends SimpleProperty<TextareaProperty, String> impl
         super(attrsFactory, id, name, TYPE);
     }
 
+    @Override
+	@NotNull
+	protected TextareaProperty getSelf() {
+		return this;
+	}
+
     @Component(
         service = PropertyHandler.class,
         property = {

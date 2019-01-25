@@ -24,4 +24,10 @@ class BooleanDefinition extends SimpleDefinition<BooleanDefinition, Boolean> {
     public BooleanDefinition(@NotNull String name) {
         super(name, "sling:boolean", Boolean.class);
     }
+
+	@Override
+	@NotNull
+	protected BooleanDefinition getSelf() {
+		return this;
+	}
 }

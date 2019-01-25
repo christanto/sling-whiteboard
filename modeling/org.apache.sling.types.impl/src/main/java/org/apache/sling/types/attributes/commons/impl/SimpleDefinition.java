@@ -21,7 +21,7 @@ package org.apache.sling.types.attributes.commons.impl;
 import org.apache.sling.types.attributes.AttributeDefinition;
 import org.jetbrains.annotations.NotNull;
 
-class SimpleDefinition<T extends AttributeDefinition<V>, V> implements AttributeDefinition<V> {
+abstract class SimpleDefinition<T extends AttributeDefinition<V>, V> implements AttributeDefinition<V> {
 
     private @NotNull String name;
     private @NotNull String type;
@@ -68,11 +68,10 @@ class SimpleDefinition<T extends AttributeDefinition<V>, V> implements Attribute
         return withMultiple(true);
     }
 
-    @SuppressWarnings("unchecked")
     @NotNull
     public T withMultiple(boolean multiple) {
         this.multiple = multiple;
-        return (T) this;
+        return getSelf();
     }
 
     @NotNull
@@ -80,10 +79,12 @@ class SimpleDefinition<T extends AttributeDefinition<V>, V> implements Attribute
         return withRequired(true);
     }
 
-    @SuppressWarnings("unchecked")
     @NotNull
     public T withRequired(boolean required) {
         this.required = required;
-        return (T) this;
+        return getSelf();
     }
+
+    @NotNull
+    protected abstract T getSelf();
 }

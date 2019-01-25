@@ -65,56 +65,51 @@ public abstract class SimpleProperty<T extends Property<V>, V> implements Writab
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	@NotNull
 	public T withTitle(@NotNull String title) {
 		attrs.put("sling:title", title);
-		return (T) this;
+		return getSelf();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	@NotNull
 	public T withRequired(boolean required) {
 		attrs.put("sling:required", required);
-		return (T) this;
+		return getSelf();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings({ "unchecked" })
 	@Override
 	@NotNull
 	public T withValidations(String... validations) {
 		attrs.put("sling:validations", validations);
-		return (T) this;
+		return getSelf();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	@NotNull
 	public T withMultiple(boolean multiple) {
 		attrs.put("sling:multiple", multiple);
-		return (T) this;
+		return getSelf();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	@NotNull
 	public T withReadonly(boolean readonly) {
 		attrs.put("sling:readonly", readonly);
-		return (T) this;
+		return getSelf();
 	}
 
 	/**
@@ -125,6 +120,14 @@ public abstract class SimpleProperty<T extends Property<V>, V> implements Writab
 	public Attributes getAttributes() {
 		return attrs.build();
 	}
+
+	/**
+	 * Returns {@code this} instance.
+	 *
+	 * @return {@code this} instance
+	 */
+	@NotNull
+	protected abstract T getSelf();
 
 	@Override
 	public boolean equals(Object o) {

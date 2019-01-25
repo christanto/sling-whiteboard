@@ -39,10 +39,16 @@ class TextPropertyImpl extends SimpleProperty<TextProperty, String> implements T
         super(attrsFactory, id, name, TYPE);
     }
 
+    @Override
+	@NotNull
+	protected TextProperty getSelf() {
+		return this;
+	}
+
     @Component(
         service = PropertyHandler.class,
         property = {
-            PropertyHandler.PROPERTY_TYPE + "=" + TYPE
+            PropertyHandler.PROPERTY_TYPE + "=" + TextProperty.TYPE
         }
     )
     public static class TextPropertyHandler extends SimplePropertyHandler<TextProperty, String> {

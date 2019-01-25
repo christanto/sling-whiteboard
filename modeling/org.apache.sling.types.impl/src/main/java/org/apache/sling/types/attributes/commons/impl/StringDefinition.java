@@ -24,4 +24,10 @@ class StringDefinition extends SimpleDefinition<StringDefinition, String> {
     public StringDefinition(@NotNull String name) {
         super(name, "sling:string", String.class);
     }
+
+    @Override
+	@NotNull
+	protected StringDefinition getSelf() {
+		return this;
+	}
 }

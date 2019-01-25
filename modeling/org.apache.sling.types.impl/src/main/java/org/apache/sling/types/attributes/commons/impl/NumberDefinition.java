@@ -24,4 +24,10 @@ class NumberDefinition extends SimpleDefinition<NumberDefinition, Long> {
     public NumberDefinition(@NotNull String name) {
         super(name, "sling:number", Long.class);
     }
+
+    @Override
+	@NotNull
+	protected NumberDefinition getSelf() {
+		return this;
+	}
 }

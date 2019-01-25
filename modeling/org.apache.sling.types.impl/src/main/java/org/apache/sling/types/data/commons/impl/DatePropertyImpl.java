@@ -41,6 +41,12 @@ class DatePropertyImpl extends SimpleProperty<DateProperty, Calendar> implements
         super(attrsFactory, id, name, TYPE);
     }
 
+    @Override
+	@NotNull
+	protected DateProperty getSelf() {
+		return this;
+	}
+
     @Component(
         service = PropertyHandler.class,
         property = {
